@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import game.skill.BaseSkill;
 
 public class SkillHelper {
-	HashMap<Integer, BaseSkill> _skillMap;
+	HashMap<Integer, BaseSkill> _skillMap = new HashMap<>();
 	
 	public boolean hasSkill(int skillID) {
 		return _skillMap.get(skillID) != null;

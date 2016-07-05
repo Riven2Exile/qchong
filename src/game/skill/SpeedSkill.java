@@ -7,8 +7,10 @@ import game.Player;
  * */
 public class SpeedSkill extends BaseSkill{
 	
-	public SpeedSkill(int id, int lv) {
-		super(id, lv);
+	public final static int SKILL_ID = SkillInterface.SPEED_SKILL; //快人一步
+	
+	public SpeedSkill(int lv) {
+		super(lv);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -24,5 +26,17 @@ public class SpeedSkill extends BaseSkill{
 		}
 		
 		player.getAttr().add_addi_speed_skill(nAddSpeed); //增加技能速度加成
+	}
+
+	@Override
+	public void setSkillID(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getSkillID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

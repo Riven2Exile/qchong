@@ -34,6 +34,26 @@ public class Attr {
 	int _final_minjie = 0;
 	int _final_speed = 0;
 	
+	void CalcBaseThree(){
+		_total_base_power = _base_power + _base_power_buff;
+		_total_base_minjie = _base_minjie + _base_minjie_buff;
+		_total_base_speed = _base_speed + _base_speed_buff;
+	}
+	
+	void CalcAddictionThree(){
+		_total_addi_power = _addi_power_skill + _addi_power_buff;
+		_total_addi_minjie = _addi_minjie_skill + _addi_minjie_buff;
+		_total_addi_speed = _addi_speed_skill + _addi_speed_buff;
+	}
+	
+	void CalFinalThree(){
+		CalcBaseThree();
+		CalcAddictionThree();
+		
+		_final_power = _total_base_power + _total_addi_power;
+		_final_minjie = _total_base_minjie + _total_addi_minjie;
+		_final_speed = _total_base_speed + _total_addi_speed;
+	}
 	
 	void clearExceptBaseThree(){
 		_base_power_buff = 0;
@@ -200,4 +220,8 @@ public class Attr {
 	
 	
 	// º∆À„
+	
+	public void tell(){
+		System.out.println("◊Ó÷’»˝Œß:" + this.get_final_power() + "," + this.get_final_minjie() + "," + this.get_final_speed());
+	}
 }

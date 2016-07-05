@@ -5,10 +5,10 @@ import java.util.HashMap;
 import game.skill.BaseSkill;
 
 public class Player {
-	Attr _attr;
+	Attr _attr = new Attr();
 	
 	// 技能map -> 方便查找
-	HashMap<Integer, BaseSkill> _skill;
+	SkillHelper _skill = new SkillHelper();
 	
 	
 	
@@ -16,7 +16,9 @@ public class Player {
 		return _attr;
 	}
 	
-	
+	public SkillHelper GetSkillHelper() {
+		return _skill;
+	}
 	
 	
 	// 武器list -> 无须查找,  需要有一个标记, 是否使用

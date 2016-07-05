@@ -2,12 +2,11 @@ package game.skill;
 
 import game.Player;
 
-public class BaseSkill implements SkillInterface{
+public abstract class BaseSkill implements SkillInterface{
 	int _skillLv = 0;
 	int _skillID = 0;
 
-	public BaseSkill(int id, int lv) {
-		_skillID = id;
+	public BaseSkill(int lv) {
 		_skillLv = lv;
 	}
 	
@@ -19,12 +18,8 @@ public class BaseSkill implements SkillInterface{
 		this._skillLv = _skillLv;
 	}
 	
-	public void setSkillID(int id) {
-		_skillID = id;
-	}
-	public int getSkillID() {
-		return _skillID;
-	}
+	public abstract void setSkillID(int id);
+	public abstract int getSkillID();
 	
 	public void CalcAttr(Player player){
 		// 子类有需求再去实现
