@@ -1,4 +1,5 @@
 package game;
+import java.lang.System;
 
 public class test {
 	
@@ -22,6 +23,9 @@ public class test {
 		// TODO Auto-generated method stub
 		System.out.println("hello");
 		
+		
+		//²âÊÔËæ»ú
+		//CalcTool.test();
 	}
 
 }
