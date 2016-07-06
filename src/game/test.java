@@ -1,8 +1,11 @@
 package game;
 import java.lang.System;
 
+import game.define.WeaponKind;
 import game.factory.SkillFactory;
+import game.factory.WeaponFactory;
 import game.skill.SkillInterface;
+import game.weapon.BaseWeapon;
 
 public class test {
 	
@@ -24,6 +27,9 @@ public class test {
 		//计算技能加成
 		p.GetSkillHelper().ReCaclAttr(p);
 		p.getAttr().CalFinalThree();
+		BaseWeapon weapon = WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0);
+		System.out.println("增加了武器:"+weapon.getWeaponKind());
+		p.GetWeaponHelper().addWeapon(weapon);
 		p.getAttr().tell();
 	}
 	

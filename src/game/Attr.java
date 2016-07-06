@@ -34,19 +34,19 @@ public class Attr {
 	int _final_minjie = 0;
 	int _final_speed = 0;
 	
-	void CalcBaseThree(){
+	public void CalcBaseThree(){
 		_total_base_power = _base_power + _base_power_buff;
 		_total_base_minjie = _base_minjie + _base_minjie_buff;
 		_total_base_speed = _base_speed + _base_speed_buff;
 	}
 	
-	void CalcAddictionThree(){
+	public void CalcAddictionThree(){
 		_total_addi_power = _addi_power_skill + _addi_power_buff;
 		_total_addi_minjie = _addi_minjie_skill + _addi_minjie_buff;
 		_total_addi_speed = _addi_speed_skill + _addi_speed_buff;
 	}
 	
-	void CalFinalThree(){
+	public void CalFinalThree(){
 		CalcBaseThree();
 		CalcAddictionThree();
 		
@@ -55,7 +55,7 @@ public class Attr {
 		_final_speed = _total_base_speed + _total_addi_speed;
 	}
 	
-	void clearExceptBaseThree(){
+	public void clearExceptBaseThree(){
 		_base_power_buff = 0;
 		_base_minjie_buff = 0;
 		_base_speed_buff = 0;

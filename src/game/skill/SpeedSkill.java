@@ -37,6 +37,6 @@ public class SpeedSkill extends BaseSkill{
 	@Override
 	public int getSkillID() {
 		// TODO Auto-generated method stub
-		return 0;
+		return SKILL_ID;
 	}
 }
