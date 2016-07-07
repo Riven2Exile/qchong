@@ -106,6 +106,13 @@ public class Attr {
 	public void set_base_speed(int _base_speed) {
 		this._base_speed = _base_speed;
 	}
+	
+	public void set_base_three(int power, int minjie, int speed){
+		this.set_base_power(power);
+		this.set_base_minjie(minjie);
+		this.set_base_speed(speed);
+	}
+	
 	public int get_base_power_buff() {
 		return _base_power_buff;
 	}

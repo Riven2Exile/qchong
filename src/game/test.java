@@ -4,6 +4,7 @@ import java.lang.System;
 import game.define.WeaponKind;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
+import game.gametest.TestDamage;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
 
@@ -41,10 +42,12 @@ public class test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("hello");
-		test1();
+		//test1();
 		
+		TestDamage.TestEmptyHandDamage();
 		//²âÊÔËæ»ú
 		//CalcTool.test();
+		
 	}
 
 }
