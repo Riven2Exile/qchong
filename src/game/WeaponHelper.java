@@ -19,5 +19,9 @@ public class WeaponHelper {
 		return _weapon.get(_weapon);
 	}
 	
+	// 枚举武器~
+	public void tell(){
 	
+		// 需求, 遍历武器， 根据不同的类型，调用不同类型的伤害函数，因为公式不同
+	}
 }

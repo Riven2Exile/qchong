@@ -155,12 +155,19 @@ public class Attr {
 	public void set_addi_power_skill(int _addi_power_skill) {
 		this._addi_power_skill = _addi_power_skill;
 	}
+	public void add_addi_power_skill(int addi_power_skill){
+		this._addi_power_skill += addi_power_skill;
+	}
 	public int get_addi_minjie_skill() {
 		return _addi_minjie_skill;
 	}
 	public void set_addi_minjie_skill(int _addi_minjie_skill) {
 		this._addi_minjie_skill = _addi_minjie_skill;
 	}
+	public void add_addi_minjie_skill( int addi_minjie_skill){
+		this._addi_minjie_skill += addi_minjie_skill;
+	}
+	
 	public int get_addi_speed_skill() {
 		return _addi_speed_skill;
 	}

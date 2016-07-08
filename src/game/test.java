@@ -35,7 +35,11 @@ public class test {
 	}
 	
 	void guessEmptyDamage(Player p){
-		System.out.println("¿ÕÊÖÉËº¦:"+ (p.getAttr().get_final_power() * CalcTool.random(1.5, 2.0)) );
+		double nMinRange = 1.5;
+		double nMaxRange = 2.0;
+		int nMinDamage = (int)(p.getAttr().get_final_power() * nMinRange);  //²Â²â¹«Ê½
+		int nMaxDamage = (int)(p.getAttr().get_final_power() * nMaxRange);
+		System.out.println("¿ÕÊÖÉËº¦Öµ:"+ nMinDamage + "-" + nMaxDamage );
 	}
 	
 	
@@ -44,7 +48,7 @@ public class test {
 		System.out.println("hello");
 		//test1();
 		
-		TestDamage.TestEmptyHandDamage();
+		TestDamage.doTest();  //¡¾²Â²âÉËº¦¡¿
 		//²âÊÔËæ»ú
 		//CalcTool.test();
 		
