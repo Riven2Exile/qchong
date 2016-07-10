@@ -46,7 +46,7 @@ public class Attr {
 		_total_addi_speed = _addi_speed_skill + _addi_speed_buff;
 	}
 	
-	public void CalFinalThree(){
+	public void CalcFinalThree(){
 		CalcBaseThree();
 		CalcAddictionThree();
 		

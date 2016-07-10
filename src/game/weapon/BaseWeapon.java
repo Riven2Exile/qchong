@@ -30,6 +30,14 @@ public abstract class BaseWeapon implements WeaponInterface{
 		return _weaponKind;
 	}
 	
+	public final int getMinDamage(){
+		return _nMinDamage;
+	}
+	
+	public final int getMaxDamage(){
+		return _nMaxDamage;
+	}
+	
 	//@Override
 	//public void HandleEffect(Player attacker, Player defender) {
 		// TODO Auto-generated method stub

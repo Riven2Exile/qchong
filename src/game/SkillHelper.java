@@ -20,6 +20,10 @@ public class SkillHelper {
 		_skillMap.put(skill.getSkillID(), skill);
 	}
 	
+	public void addAllSkill(HashMap<Integer, BaseSkill> data){
+		_skillMap.putAll(data);
+	}
+	
 	public void ClearSkill() {
 		_skillMap.clear();
 	}

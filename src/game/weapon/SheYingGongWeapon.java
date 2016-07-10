@@ -1,7 +1,7 @@
 package game.weapon;
 
 import game.Player;
-import game.RangeInt;
+import game.Pair;
 import game.define.WeaponKind;
 import game.define.WeaponType;
 

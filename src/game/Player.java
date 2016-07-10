@@ -1,6 +1,8 @@
 package game;
 
 public class Player {
+	
+	String _name = "";
 	Attr _attr = new Attr();
 	
 	// 技能map -> 方便查找
@@ -8,6 +10,14 @@ public class Player {
 	
 	// 武器
 	WeaponHelper _weapon = new WeaponHelper();
+	
+	public void SetName(String s){
+		_name = s;
+	}
+	
+	public String GetPlayerName(){
+		return _name;
+	}
 	
 	public Attr getAttr(){
 		return _attr;

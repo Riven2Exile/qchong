@@ -1,12 +1,12 @@
 package game.weapon;
 
 import game.Player;
-import game.RangeInt;
+import game.Pair;
 
 public interface WeaponInterface {
 	
 	//产生效果
-	public abstract void HandleEffect(Player attacker, Player defender); 
+	public void HandleEffect(Player attacker, Player defender); 
 	
 }
 

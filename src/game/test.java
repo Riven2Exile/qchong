@@ -22,12 +22,12 @@ public class test {
 	static public void test1(){
 		Player p = new Player();
 		setBaseThree(p, 3, 4, 3);
-		p.getAttr().CalFinalThree();
+		p.getAttr().CalcFinalThree();
 		//todo:增加技能  --> push_back
 		p.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
 		//计算技能加成
 		p.GetSkillHelper().ReCaclAttr(p);
-		p.getAttr().CalFinalThree();
+		p.getAttr().CalcFinalThree();
 		BaseWeapon weapon = WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0);
 		System.out.println("增加了武器:"+weapon.getWeaponKind());
 		p.GetWeaponHelper().addWeapon(weapon);
