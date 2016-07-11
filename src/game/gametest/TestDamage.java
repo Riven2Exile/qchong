@@ -33,11 +33,13 @@ public class TestDamage {
 		// 防御者
 		Player defender = new Player();
 		
+		// 设置测试玩家数值 , 通过各种 addData来加入多个数据
 		TestEx test = new TestEx();
 		test.addData("1ji", 4, 4, 4, 
 				null, 
 				new Pair[]{new Pair(WeaponKind.SHE_YING_GONG, 0)});
-		// 设置玩家基本属性值, 以及装备，技能等
+		
+		
 		
 		
 		test.start();
