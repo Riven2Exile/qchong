@@ -1,29 +1,29 @@
 package game.weapon;
 
+/*
+ *  汽水罐
+ */
+
 import game.Player;
 import game.define.WeaponKind;
 import game.define.WeaponType;
 
-public class HuanKouDaoWeapon extends BaseWeapon{
+public class QiShuiGuanWeapon extends BaseWeapon {
 
-	static{
-		_weaponKind = WeaponKind.HUAN_KOU_DAO; 	//环扣刀
-		_weaponType = WeaponType.WEAPON_MIDDLE;	//中型武器
+	static {
+		_weaponKind = WeaponKind.QI_SHUI_GUAN;	//汽水罐
+		_weaponType = WeaponType.WEAPON_THROW;	//投掷武器
 	}
 	
-	
-	public HuanKouDaoWeapon(int enhanceLv, int minDamage, int maxDamage) {
+	public QiShuiGuanWeapon(int enhanceLv, int minDamage, int maxDamage) {
 		super(enhanceLv, minDamage, maxDamage);
 		// TODO Auto-generated constructor stub
-		
-		
 	}
 
 	@Override
 	public void HandleEffect(Player attacker, Player defender) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 }

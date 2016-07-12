@@ -1,29 +1,29 @@
 package game.weapon;
 
+/*
+ *  接力棒
+ */
+
 import game.Player;
 import game.define.WeaponKind;
 import game.define.WeaponType;
 
-public class HuanKouDaoWeapon extends BaseWeapon{
+public class JieLiBangWeapon extends BaseWeapon {
 
-	static{
-		_weaponKind = WeaponKind.HUAN_KOU_DAO; 	//环扣刀
-		_weaponType = WeaponType.WEAPON_MIDDLE;	//中型武器
+	static {
+		_weaponKind = WeaponKind.JIE_LI_BANG;	//接力棒 
+		_weaponType = WeaponType.WEAPON_TINY;	//小型
 	}
 	
-	
-	public HuanKouDaoWeapon(int enhanceLv, int minDamage, int maxDamage) {
+	public JieLiBangWeapon(int enhanceLv, int minDamage, int maxDamage) {
 		super(enhanceLv, minDamage, maxDamage);
 		// TODO Auto-generated constructor stub
-		
-		
 	}
 
 	@Override
 	public void HandleEffect(Player attacker, Player defender) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 }

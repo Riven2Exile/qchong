@@ -7,5 +7,20 @@ public class WeaponKind{
 	public static final int SHE_YING_GONG	= 1; 	//ÉßÓ°¹­
 	public static final int HUAN_KOU_DAO	= 2;	//»·¿Ûµ¶
 	public static final int KUANG_MO_LIAN	= 3;	//¿ñÄ§Á­
+	public static final int PAN_GUAN_BI		= 4;	//ÅÐ¹Ù±Ê
+	public static final int SHUANG_JIE_GUN	= 5;	//Ë«½Ø¹÷
+	public static final int LIU_XING_QIU	= 6;	//Á÷ÐÇÇò
+	public static final int JIE_LI_BANG		= 7;	//½ÓÁ¦°ô
+	public static final int SHOU_LEI		= 8;	//ÊÖÀ×
+	public static final int DUAN_JIAN		= 9;	//¶Ì½£
+	public static final int LAO_SHU			= 10;	//ÀÏÊó
+	public static final int QI_SHUI_GUAN	= 11;	//ÆûË®¹Þ
+	public static final int FEI_DAO			= 12;	//Ð¡Àî·Éµ¶
+	public static final int MU_CHUI			= 13;	//Ä¾é³
+	public static final int KUAN_REN_JIAN	= 14;	//¿íÈÐ½£
+	public static final int HONG_YING_QIANG	= 15;	//ºìÓ§Ç¹
+	public static final int TIE_CHAN		= 16;	//Ìú²ù
+	public static final int MU_JIAN			= 17; 	//Ä¾½£
+	public static final int HUAN_YING_QIANG	= 18;	//»ÃÓ°Ç¹
 }
 
