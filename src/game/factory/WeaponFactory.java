@@ -135,6 +135,36 @@ public class WeaponFactory {
 				m.max = 10;
 			}
 		}
+		else if(WeaponKind.HONG_YING_QIANG == weaponKind){
+			if (0 == enhanceLv){
+				m.min = 15;
+				m.max = 30;
+			}
+		}
+		else if(WeaponKind.TIE_CHAN == weaponKind){
+			if (0 == enhanceLv){
+				m.min = 12;
+				m.max = 18;
+			}
+		}
+		else if(WeaponKind.HUAN_KOU_DAO == weaponKind){
+			if (0 == enhanceLv){
+				m.min = 12;
+				m.max = 12;
+			}
+		}
+		else if(WeaponKind.MU_JIAN == weaponKind){
+			if (0 == enhanceLv){
+				m.min = 10;
+				m.max = 25;
+			}
+		}
+		else if(WeaponKind.HUAN_YING_QIANG == weaponKind){ //ª√”∞«π
+			if (0 == enhanceLv){
+				m.min = 20;
+				m.max = 40;
+			}
+		}
 	}
 }
 
