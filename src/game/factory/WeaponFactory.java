@@ -7,6 +7,7 @@ import game.weapon.HongYingQiangWeapon;
 import game.weapon.HuanKouDaoWeapon;
 import game.weapon.HuanYingQiangWeapon;
 import game.weapon.JieLiBangWeapon;
+import game.weapon.KaiShanFuWeapon;
 import game.weapon.KuanRenJianWeapon;
 import game.weapon.KuangMoLianWeapon;
 import game.weapon.LaoShuWeapon;
@@ -53,6 +54,7 @@ public class WeaponFactory {
 		case WeaponKind.HUAN_YING_QIANG: return new HuanYingQiangWeapon(enhanceLv, m.min, m.max);//幻影枪
 		
 		
+		case WeaponKind.KAI_SHAN_FU: return new KaiShanFuWeapon(enhanceLv, m.min, m.max);	//开山斧
 		
 		
 		///// 特殊武器
@@ -170,6 +172,12 @@ public class WeaponFactory {
 			if (0 == enhanceLv){
 				m.min = 20;
 				m.max = 40;
+			}
+		}
+		else if(WeaponKind.KAI_SHAN_FU == weaponKind) { //开山斧
+			if (0 == enhanceLv){
+				m.min = 12;
+				m.max = 18;
 			}
 		}
 		

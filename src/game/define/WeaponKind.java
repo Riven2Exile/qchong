@@ -22,6 +22,12 @@ public class WeaponKind{
 	public static final int TIE_CHAN		= 16;	//Ìú²ù
 	public static final int MU_JIAN			= 17; 	//Ä¾½£
 	public static final int HUAN_YING_QIANG	= 18;	//»ÃÓ°Ç¹
+	public static final int PING_DI_GUO		= 19;	//Æ½µ×¹ø
+	public static final int BAN_ZHUAN		= 20;	//°å×©
+	public static final int SAN_CHA_JI		= 21;	//Èý²æêª
+	public static final int BAN_SHOU		= 22;	//°âÊÖ
+	public static final int CHONG_QI_CHUI_ZI= 23;	//³äÆø´¸×Ó
+	public static final int KAI_SHAN_FU		= 24; 	//¿ªÉ½¸«
 	
 	
 	
