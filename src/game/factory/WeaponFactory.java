@@ -15,6 +15,7 @@ import game.weapon.MuChuiWeapon;
 import game.weapon.MuJianWeapon;
 import game.weapon.PanGuanBiWeapon;
 import game.weapon.QiShuiGuanWeapon;
+import game.weapon.RuYiJinGuBangWeapon;
 import game.weapon.SheYingGongWeapon;
 import game.weapon.ShouLeiWeapon;
 import game.weapon.ShuangJieGunWeapon;
@@ -50,6 +51,12 @@ public class WeaponFactory {
 		case WeaponKind.HUAN_KOU_DAO: return new HuanKouDaoWeapon(enhanceLv, m.min, m.max);		//ª∑ø€µ∂
 		case WeaponKind.MU_JIAN: return new MuJianWeapon(enhanceLv, m.min, m.max);				//ƒæΩ£
 		case WeaponKind.HUAN_YING_QIANG: return new HuanYingQiangWeapon(enhanceLv, m.min, m.max);//ª√”∞«π
+		
+		
+		
+		
+		///// Ãÿ ‚Œ‰∆˜
+		case WeaponKind.RU_YI_JIN_GU_BANG: return new RuYiJinGuBangWeapon(enhanceLv, m.min, m.max);	//»Á“‚Ωπø∞Ù
 		}
 		return null;
 	}
@@ -164,6 +171,17 @@ public class WeaponFactory {
 				m.min = 20;
 				m.max = 40;
 			}
+		}
+		
+		
+		
+		
+		
+		
+		////// Ãÿ ‚Œ‰∆˜
+		if (WeaponKind.RU_YI_JIN_GU_BANG == weaponKind){
+			m.min = 10;
+			m.max = 90;
 		}
 	}
 }

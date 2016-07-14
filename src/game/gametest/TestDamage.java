@@ -35,9 +35,11 @@ public class TestDamage {
 		
 		// 设置测试玩家数值 , 通过各种 addData来加入多个数据
 		TestEx test = new TestEx();
-		test.addData("1ji", 4, 4, 4, 
+		// 【测试数据】 ：判官笔(19,23)  铁铲(21,28) 空手(8,10), 如意金箍棒(18,93)
+		// 对方 力量6,环扣刀22
+		test.addData("1ji", 5, 5, 7, 
 				null, 
-				new Pair[]{new Pair(WeaponKind.SHE_YING_GONG, 0)});
+				new Pair[]{new Pair(WeaponKind.PAN_GUAN_BI, 0), new Pair(WeaponKind.TIE_CHAN,0), new Pair(WeaponKind.RU_YI_JIN_GU_BANG, 0)});
 		
 		
 		
@@ -55,7 +57,6 @@ public class TestDamage {
 		int nMaxDamage = EmptyHandFormat(atkAttr, nMaxRange);
 		System.out.println("空手伤害值:"+ nMinDamage + "-" + nMaxDamage );
 	}
-	
 	////// 空手伤害公式
 	public static int EmptyHandFormat(Attr atkAttr, double factor){
 		int nDamage = (int)Math.floor(atkAttr.get_final_power() * factor);  //猜测公式;
@@ -70,25 +71,78 @@ public class TestDamage {
 			if (w.getWeaponType() == WeaponType.WEAPON_MIDDLE){
 				TestMiddleWeaponDamage(attacker,  defender,  w);
 			}
+			else if(w.getWeaponType() == WeaponType.WEAPON_LARGE){
+				TestLargeWeaponDamage(attacker, defender, w);
+			}
+			else if(w.getWeaponType() == WeaponType.WEAPON_TINY){
+				TestTinyWeaponDamage(attacker, defender, w);
+			}
+			else if(w.getWeaponType() == WeaponType.WEAPON_THROW){
+				TestThrowWeaponDamage(attacker, defender, w);
+			}
 		}
 	}
 	
-	// 测试中型武器伤害
+	////////// 【测试中型武器伤害】
 	public static void TestMiddleWeaponDamage(Player attacker, Player defender, BaseWeapon weapon){
 		int nMin = weapon.getMinDamage();	//最小伤害
 		int nMax = weapon.getMaxDamage();	//最大伤害
 		
 		int nMinDamage = MiddleWeaponFormat(attacker, nMin); //猜测公式
 		int nMaxDamage = MiddleWeaponFormat(attacker, nMax);
-		System.out.println("武器"+weapon.getWeaponKind() + " 造成单方伤害" + nMinDamage + "~" + nMaxDamage);
+		System.out.println("中型武器"+weapon.getWeaponKind() + " 造成单方伤害" + nMinDamage + "~" + nMaxDamage);
 	}
-	
 	//// 中型武器伤害公式
 	public static int MiddleWeaponFormat(Player attacker, int weaponBaseDamage){
-		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.75 + weaponBaseDamage);
+		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.99 + weaponBaseDamage);
 		return nDamage;
 	}
 	
+	////////// 【测试大型武器伤害】
+	public static void TestLargeWeaponDamage(Player attacker, Player defender, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();
+		int nMax = weapon.getMaxDamage();
+		
+		int nMinDamage = LargeWeaponFormat(attacker, nMin);
+		int nMaxDamage = LargeWeaponFormat(attacker, nMax);
+		System.out.println("大型武器"+weapon.getWeaponKind() + " 造成单方伤害" + nMinDamage + "~" + nMaxDamage);
+		
+	}
+	///// 大型武器公式猜测
+	public static int LargeWeaponFormat(Player attacker, int weaponBaseDamage){
+		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 2.2+ weaponBaseDamage);
+		return nDamage;
+	}
+	
+	//////////// 【测试小型武器伤害】
+	public static void TestTinyWeaponDamage(Player attacker, Player defender, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();
+		int nMax = weapon.getMaxDamage();
+		
+		int nMinDamage = TinyWeaponFormat(attacker, nMin);
+		int nMaxDamage = TinyWeaponFormat(attacker, nMax);
+		System.out.println("小型武器"+weapon.getWeaponKind() + " 造成单方伤害" + nMinDamage + "~" + nMaxDamage);
+	}
+	///// 小型武器伤害公式猜测
+	public static int TinyWeaponFormat(Player attacker, int weaponBaseDamage){
+		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.5 + weaponBaseDamage);
+		return nDamage;
+	}
+	
+	///////////// 【测试投掷武器伤害】
+	public static void TestThrowWeaponDamage(Player attacker, Player defender, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();
+		int nMax = weapon.getMaxDamage();
+		
+		int nMinDamage = ThrowWeaponFormat(attacker, nMin);
+		int nMaxDamage = ThrowWeaponFormat(attacker, nMax);
+		System.out.println("投掷武器"+weapon.getWeaponKind() + " 造成单方伤害" + nMinDamage + "~" + nMaxDamage); 
+	}
+	////// 投掷武器伤害公式猜测
+	public static int ThrowWeaponFormat(Player attacker, int weaponBaseDamage){
+		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.5 + weaponBaseDamage);
+		return nDamage;
+	}
 	
 	
 	

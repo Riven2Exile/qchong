@@ -21,7 +21,7 @@ public class test {
 	
 	static public void test1(){
 		Player p = new Player();
-		setBaseThree(p, 3, 4, 3);
+		setBaseThree(p, 5, 5, 7);
 		p.getAttr().CalcFinalThree();
 		//todo:增加技能  --> push_back
 		p.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));

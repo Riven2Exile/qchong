@@ -22,5 +22,9 @@ public class WeaponKind{
 	public static final int TIE_CHAN		= 16;	//铁铲
 	public static final int MU_JIAN			= 17; 	//木剑
 	public static final int HUAN_YING_QIANG	= 18;	//幻影枪
+	
+	
+	
+	public static final int RU_YI_JIN_GU_BANG	= 50;	//如意金箍棒
 }
 

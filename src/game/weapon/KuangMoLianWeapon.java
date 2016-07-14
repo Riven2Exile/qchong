@@ -11,12 +11,6 @@ import game.define.WeaponType;
 
 
 public class KuangMoLianWeapon extends BaseWeapon {
-
-	// ¾²Ì¬´úÂë¿é
-	static {
-		_weaponKind = WeaponKind.KUANG_MO_LIAN;	//¿ñÄ§Á­
-		_weaponType = WeaponType.WEAPON_LARGE;	//´óĞÍÎäÆ÷ 
-	}
 	
 	public KuangMoLianWeapon(int enhanceLv, int minDamage, int maxDamage) {
 		super(enhanceLv, minDamage, maxDamage);
@@ -28,6 +22,18 @@ public class KuangMoLianWeapon extends BaseWeapon {
 	public void HandleEffect(Player attacker, Player defender) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public int getWeaponType() {
+		// TODO Auto-generated method stub
+		return WeaponType.WEAPON_LARGE;	//´óĞÍÎäÆ÷ 
+	}
+
+	@Override
+	public int getWeaponKind() {
+		// TODO Auto-generated method stub
+		return WeaponKind.KUANG_MO_LIAN;	//¿ñÄ§Á­
 	}
 
 }

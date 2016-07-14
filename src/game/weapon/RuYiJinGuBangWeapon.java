@@ -1,16 +1,16 @@
 package game.weapon;
 
 /*
- *  红缨枪
+ *  如意金箍棒
  */
 
 import game.Player;
 import game.define.WeaponKind;
 import game.define.WeaponType;
 
-public class HongYingQiangWeapon extends BaseWeapon {
-
-	public HongYingQiangWeapon(int enhanceLv, int minDamage, int maxDamage) {
+public class RuYiJinGuBangWeapon extends BaseWeapon {
+	
+	public RuYiJinGuBangWeapon(int enhanceLv, int minDamage, int maxDamage) {
 		super(enhanceLv, minDamage, maxDamage);
 		// TODO Auto-generated constructor stub
 	}
@@ -24,13 +24,13 @@ public class HongYingQiangWeapon extends BaseWeapon {
 	@Override
 	public int getWeaponType() {
 		// TODO Auto-generated method stub
-		return WeaponType.WEAPON_MIDDLE;		//中型武器
+		return WeaponType.WEAPON_LARGE;	//大型武器
 	}
 
 	@Override
 	public int getWeaponKind() {
 		// TODO Auto-generated method stub
-		return WeaponKind.HONG_YING_QIANG;	//红缨枪
+		return WeaponKind.RU_YI_JIN_GU_BANG; //如意金箍棒
 	}
 
 }
