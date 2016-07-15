@@ -178,7 +178,7 @@ public class TestDamage {
 			for ( int i = 0; i < _data.size(); ++i ){
 				Player p = _data.get(i);
 				
-				System.out.println(p.GetPlayerName());
+				System.out.println("\n" + p.GetPlayerName());
 				p.getAttr().tell();
 				
 				TestEmptyHandDamage(p.getAttr(), null); //¿ÕÊÖÉËº¦
