@@ -41,10 +41,14 @@ public class TestDamage {
 				null, 
 				new Pair[]{new Pair(WeaponKind.PAN_GUAN_BI, 0), new Pair(WeaponKind.TIE_CHAN,0), new Pair(WeaponKind.RU_YI_JIN_GU_BANG, 0)});
 		
-		//q宠3 5级【测试数据】: 开山斧(21,25)  短剑()  接力棒(19,22) 空手()
+		//q宠3 5级【测试数据】: 开山斧(21,25)  短剑(12)  接力棒(17,22) 空手(7)
 		test.addData("宠3_5级", 3, 5, 7, null, 
 				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0)});
 		
+		//q宠3 6级【测试数据】: 开山斧(21,23)  短剑(14)  接力棒(22,23)  充气锤子(39)  空手()
+		test.addData("宠3_6级", 4, 5, 7, null, 
+				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
+						new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
 		
 		test.start();
 	}
