@@ -45,10 +45,12 @@ public class TestDamage {
 		test.addData("宠3_5级", 3, 5, 7, null, 
 				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0)});
 		
-		//q宠3 6级【测试数据】: 开山斧(21,23)  短剑(14)  接力棒(22,23)  充气锤子(39)  空手()
+		//q宠3 6级【测试数据】: 开山斧(21,25)  短剑(12,14)  接力棒(21,23)  充气锤子(31,39)  空手()
 		test.addData("宠3_6级", 4, 5, 7, null, 
 				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
 						new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
+		
+		// 环扣刀 （力量3，伤19）
 		
 		test.start();
 	}
