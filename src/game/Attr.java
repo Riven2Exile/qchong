@@ -1,9 +1,15 @@
 package game;
+
+import game.define.SexType;
+
 /*
  * 属性类
  * */
 public class Attr {
+	int _sex = SexType.SEX_GIRL;
+	
 	int _base_hp; //基础生命值
+	int _final_hp;
 	///// 三围属性
 	int _base_power = 0;
 	int _base_minjie = 0;

@@ -11,7 +11,6 @@ public class BalanceSkill extends BaseSkill {
 	public BalanceSkill(int lv) {
 		super(lv);
 		// TODO Auto-generated constructor stub
-		SKILL_ID = BALANCE_ATTR_SKILL;  //均衡发展
 	}
 
 	public void CalcAttr(Player player) {
@@ -25,9 +24,9 @@ public class BalanceSkill extends BaseSkill {
 		
 		switch (getSkillLv()) {
 		case 0:
-			nAddPower = (int)Math.floor( nTotalBasePower * 0.5 + 2);
-			nAddMinjie = (int)Math.floor( nTotalBaseMinjie * 0.5 + 2); //【公式待确定】
-			nAddSpeed = (int)Math.floor( nTotalBaseSpeed * 0.5 + 2);
+			nAddPower = (int)Math.floor( nTotalBasePower * 0.2 + 1);
+			nAddMinjie = (int)Math.floor( nTotalBaseMinjie * 0.2 + 1); 
+			nAddSpeed = (int)Math.floor( nTotalBaseSpeed * 0.2 + 1);
 			break;
 
 		default:
@@ -37,5 +36,17 @@ public class BalanceSkill extends BaseSkill {
 		player.getAttr().add_addi_power_skill(nAddPower);
 		player.getAttr().add_addi_minjie_skill(nAddMinjie); //增加技能敏捷加成
 		player.getAttr().add_addi_speed_skill(nAddSpeed);
+	}
+
+	@Override
+	public int getSkillID() {
+		// TODO Auto-generated method stub
+		return BALANCE_ATTR_SKILL;
+	}
+
+	@Override
+	public int getSkillType() {
+		// TODO Auto-generated method stub
+		return SKILLTYPE_FOREVER;
 	}
 }

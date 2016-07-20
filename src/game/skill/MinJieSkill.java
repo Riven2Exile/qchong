@@ -11,7 +11,6 @@ public class MinJieSkill extends BaseSkill {
 	public MinJieSkill(int lv) {
 		super(lv);
 		// TODO Auto-generated constructor stub
-		SKILL_ID = MINJIE_SKILL;	// 身手敏捷
 	}
 
 	public void CalcAttr(Player player) {
@@ -27,5 +26,17 @@ public class MinJieSkill extends BaseSkill {
 		}
 		
 		player.getAttr().add_addi_minjie_skill(nAddMinjie); //增加技能敏捷加成
+	}
+
+	@Override
+	public int getSkillID() {
+		// TODO Auto-generated method stub
+		return MINJIE_SKILL;
+	}
+
+	@Override
+	public int getSkillType() {
+		// TODO Auto-generated method stub
+		return SKILLTYPE_FOREVER;
 	}
 }

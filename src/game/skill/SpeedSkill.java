@@ -12,8 +12,6 @@ public class SpeedSkill extends BaseSkill{
 	
 	public SpeedSkill(int lv) {
 		super(lv);
-		// TODO Auto-generated constructor stub
-		SKILL_ID = SkillInterface.SPEED_SKILL;
 	}
 
 	public void CalcAttr(Player player) {
@@ -28,6 +26,18 @@ public class SpeedSkill extends BaseSkill{
 		}
 		
 		player.getAttr().add_addi_speed_skill(nAddSpeed); //增加技能速度加成
+	}
+
+	@Override
+	public int getSkillID() {
+		// TODO Auto-generated method stub
+		return SkillInterface.SPEED_SKILL;
+	}
+
+	@Override
+	public int getSkillType() {
+		// TODO Auto-generated method stub
+		return SKILLTYPE_FOREVER;
 	}
 
 }

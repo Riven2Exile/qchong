@@ -3,7 +3,6 @@ package game.skill;
 import game.Player;
 
 public abstract class BaseSkill implements SkillInterface{
-	public static int SKILL_ID = UNDEFINE_SKILL;
 	int _skillLv = 0;
 
 	public BaseSkill(int lv) {
@@ -19,9 +18,8 @@ public abstract class BaseSkill implements SkillInterface{
 	}
 	
 	//public abstract void setSkillID(int id);
-	public int getSkillID(){
-		return SKILL_ID;
-	}
+	public abstract int getSkillID();
+	public abstract int getSkillType();
 	
 	public void CalcAttr(Player player){
 		// 子类有需求再去实现

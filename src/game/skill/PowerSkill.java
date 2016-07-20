@@ -10,8 +10,6 @@ public class PowerSkill extends BaseSkill{
 
 	public PowerSkill(int lv) {
 		super(lv);
-		// TODO Auto-generated constructor stub
-		SKILL_ID = SkillInterface.POWER_SKILL; //天生大力
 	}
 
 
@@ -27,5 +25,19 @@ public class PowerSkill extends BaseSkill{
 		}
 		
 		player.getAttr().add_addi_power_skill(nAddPower); //增加技能力量加成
+	}
+
+
+	@Override
+	public int getSkillID() {
+		// TODO Auto-generated method stub
+		return POWER_SKILL;
+	}
+
+
+	@Override
+	public int getSkillType() {
+		// TODO Auto-generated method stub
+		return SKILLTYPE_FOREVER;
 	}
 }

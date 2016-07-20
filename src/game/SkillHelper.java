@@ -29,9 +29,13 @@ public class SkillHelper {
 	}
 	
 	
-	public void ReCaclAttr(Player p) {
+	public void ReCaclForeverAttr(Player p) {
 		for (Entry<Integer, BaseSkill> entry : _skillMap.entrySet()){
-			entry.getValue().CalcAttr(p);
+			if(entry.getValue().getSkillType() == BaseSkill.SKILLTYPE_FOREVER){
+				entry.getValue().CalcAttr(p);
+			}
 		}
+		
+		p.getAttr().CalcAddictionThree();
 	}
 }

@@ -11,6 +11,7 @@ import game.define.WeaponKind;
 import game.define.WeaponType;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
+import game.skill.BaseSkill;
 import game.weapon.BaseWeapon;
 
 /*
@@ -57,9 +58,10 @@ public class TestDamage {
 						new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
 		
 		//q宠3 8级【测试数据】: 开山斧(26)  短剑(13)  接力棒()  充气锤子(33,34)  空手(9,10)
-				test.addData("宠3_7级", 5, 6, 7, null, 
+				test.addData("宠3_7级", 5, 6, 7, new Pair[]{new Pair(BaseSkill.SPEED_SKILL, 0)}, 
 						new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
 								new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
+		
 		
 		test.start();
 	}
@@ -164,6 +166,25 @@ public class TestDamage {
 	
 	
 	
+	/////// 模拟战斗流程
+	public static void SimulationFight(){
+		/* 暂不考虑速度，命中，闪避
+		 		1.需要复制一份自己的实例
+		 		2.随机出攻击模式 a.空手 b.技能   c.武器(直接攻击，还是丢弃)
+		 		3.如果是a和c, 则先计算自己即将产生的伤害，  再计算对方的减免
+		 		4.如果是b单独的加血技能，    如果是攻击技能
+		
+		*/
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	///////////// 内部类
 	static class TestEx{
 		public void addData(String name, int basePower, int baseMinjie, int baseSpeed, 
@@ -179,7 +200,9 @@ public class TestDamage {
 				}
 			}
 			
-			p.getAttr().CalcFinalThree();
+			//// 计算永久型技能带来的加成
+			p.GetSkillHelper().ReCaclForeverAttr(p);
+			p.getAttr().CalcFinalThree(); //计算总属性
 			if( weapon != null){
 				for (int i = 0; i < weapon.length; ++i) {
 					p.GetWeaponHelper().addWeapon(WeaponFactory.getInstance(weapon[i].first, weapon[i].second));
@@ -194,6 +217,8 @@ public class TestDamage {
 				Player p = _data.get(i);
 				
 				System.out.println("\n" + p.GetPlayerName());
+				
+				
 				p.getAttr().tell();
 				
 				TestEmptyHandDamage(p.getAttr(), null); //空手伤害

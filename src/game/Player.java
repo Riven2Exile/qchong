@@ -3,6 +3,7 @@ package game;
 public class Player {
 	
 	String _name = "";
+	int _level = 0;
 	Attr _attr = new Attr();
 	
 	// 技能map -> 方便查找
@@ -29,6 +30,13 @@ public class Player {
 	
 	public WeaponHelper GetWeaponHelper(){
 		return _weapon;
+	}
+	
+	public void setLevel(int l){
+		_level = l;
+	}
+	public int getLevel(){
+		return _level;
 	}
 	// 武器list -> 无须查找,  需要有一个标记, 是否使用
 }

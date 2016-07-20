@@ -24,7 +24,16 @@ public class CalcTool {
 		return min + (int)b;
 	}
 	
-	
+	// 权重.... 用过传入一个预先定义的权重表，得到一个权重下标索引
+	public static <E> int getWeightIndex(BaseWeight<E> weight){
+		int nSize = weight.getSize();
+		if (nSize <= 0){
+			return 0;
+		}
+		else{
+			return random(1, nSize);
+		}
+	}
 	
 	public static void test() {
 		
