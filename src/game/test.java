@@ -48,6 +48,12 @@ public class test {
 		System.out.println("hello");
 		//test1();
 		
+//		Player a = new Player();
+//		a.setLevel(10);
+//		Player an = ClassCopy.Copy(a);
+//		a.setLevel(12);
+		
+		
 		TestDamage.doTest();  //¡¾²Â²âÉËº¦¡¿
 		//²âÊÔËæ»ú
 		//CalcTool.test();
