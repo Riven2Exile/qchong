@@ -54,10 +54,10 @@ public class test {
 //		a.setLevel(12);
 		
 		
-		TestDamage.doTest();  //¡¾²Â²âÉËº¦¡¿
+		//TestDamage.doTest();  //¡¾²Â²âÉËº¦¡¿
 		
 		//²âÊÔËæ»ú
-		//CalcTool.test();
+		CalcTool.test();
 		
 	}
 

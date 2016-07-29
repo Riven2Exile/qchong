@@ -1,33 +1,19 @@
 package game;
 
-import java.util.ArrayList;
-
 /*
- *  权重父类
+ *  基础权重类, 可以被继承
  */
 
-public class BaseWeight<E> {
-
-	ArrayList<E> _mData;
+public class BaseWeight {
 	
-	public BaseWeight() {
+	public BaseWeight(int n) {
 		// TODO Auto-generated constructor stub
-	}
-
-	public void putAData(E data){
-		_mData.add(data);
+		nWeight = n;
 	}
 	
-	public int getSize(){
-		return _mData.size();
-	}
+	protected int nWeight = 0;
 	
-	public boolean GetData(int nIndex, E outData){
-		if (nIndex >= 0 && nIndex < _mData.size()){
-			outData = _mData.get(nIndex);
-			return true;
-		}
-		else
-			return false;
+	public int getWeight(){
+		return nWeight;
 	}
 }

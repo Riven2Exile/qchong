@@ -24,17 +24,6 @@ public class CalcTool {
 		return min + (int)b;
 	}
 	
-	// 权重.... 用过传入一个预先定义的权重表，得到一个权重下标索引    (未测试)
-	public static <E> int getWeightIndex(BaseWeight<E> weight){
-		int nSize = weight.getSize();
-		if (nSize <= 0){
-			return 0;
-		}
-		else{
-			return random(1, nSize);
-		}
-	}
-	
 	// 概率... (输入整型)  测试通过
 	public static boolean probabilityInt(int nProbability){
 		return nProbability >= random(1, 100);
@@ -107,7 +96,6 @@ public class CalcTool {
 		
 		// 3. 测试 probabilityInt 概率
 		int[] nArrayPro = {0, 3, 67, 100};
-		mapData.clear(); //统计数据清空
 		strOut = "共执行了"+dCount+"次,\n";
 		for ( int iPro : nArrayPro ){
 			int iCount = 0;  //命中次数
@@ -115,14 +103,31 @@ public class CalcTool {
 				if (probabilityInt(iPro) ){
 					++iCount;
 				}
-			}
-			mapData.put(new Integer(iPro), iCount);
-			
+			}		
 			
 			strOut = strOut + "设定概率为:" + iPro + "%," + "结果实验执行概率为:" + iCount/(float)dCount * 100 + "%\n";
 			System.out.println(strOut);
 		}
 		
+		// 4.测试权重
+		BaseWeightContent weightObj = new BaseWeightContent();
+		weightObj.putAData(new BaseWeight(1));
+		weightObj.putAData(new BaseWeight(2));
+		weightObj.putAData(new BaseWeight(1));
+		mapData.clear();
+		strOut = "共执行了"+dCount+"次,\n";
+		mapData.put(0, 0);
+		mapData.put(1, 0);
+		mapData.put(2, 0);
+		for (int i = 0 ; i < dCount; ++i){
+			int nKey =  weightObj.getWeightIndex();
+			mapData.get( nKey ).intValue();
+			mapData.put(nKey, mapData.get( nKey ).intValue() + 1) ;
+		}
 		
+		for ( Entry<Integer, Integer> e : mapData.entrySet() ){
+			strOut = strOut + "项目:" + e.getKey() + "的概率:" + e.getValue() / (float)dCount * 100 + "%\n";
+		}
+		System.out.println(strOut);
 	}
 }

@@ -30,6 +30,13 @@ public abstract class BaseWeapon implements WeaponInterface{
 		return _nMaxDamage;
 	}
 	
+	public void setUsed(boolean b){
+		_hasUsed = b;
+	}
+	
+	public boolean hasUsed(){
+		return _hasUsed;
+	}
 	//@Override
 	//public void HandleEffect(Player attacker, Player defender) {
 		// TODO Auto-generated method stub
