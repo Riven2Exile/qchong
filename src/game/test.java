@@ -55,6 +55,7 @@ public class test {
 		
 		
 		TestDamage.doTest();  //¡¾²Â²âÉËº¦¡¿
+		
 		//²âÊÔËæ»ú
 		//CalcTool.test();
 		

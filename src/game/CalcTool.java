@@ -24,7 +24,7 @@ public class CalcTool {
 		return min + (int)b;
 	}
 	
-	// 权重.... 用过传入一个预先定义的权重表，得到一个权重下标索引
+	// 权重.... 用过传入一个预先定义的权重表，得到一个权重下标索引    (未测试)
 	public static <E> int getWeightIndex(BaseWeight<E> weight){
 		int nSize = weight.getSize();
 		if (nSize <= 0){
@@ -34,6 +34,12 @@ public class CalcTool {
 			return random(1, nSize);
 		}
 	}
+	
+	// 概率... (输入整型)  测试通过
+	public static boolean probabilityInt(int nProbability){
+		return nProbability >= random(1, 100);
+	}
+	
 	
 	public static void test() {
 		
@@ -98,5 +104,25 @@ public class CalcTool {
 			strOut = strOut + entry.getKey() + ":" + nVal.nCount + "次," + nVal.nCount/(double)dCount * 100 + "%\n";
 		}
 		System.out.println(strOut);
+		
+		// 3. 测试 probabilityInt 概率
+		int[] nArrayPro = {0, 3, 67, 100};
+		mapData.clear(); //统计数据清空
+		strOut = "共执行了"+dCount+"次,\n";
+		for ( int iPro : nArrayPro ){
+			int iCount = 0;  //命中次数
+			for ( int i = 0; i < dCount; ++i ){
+				if (probabilityInt(iPro) ){
+					++iCount;
+				}
+			}
+			mapData.put(new Integer(iPro), iCount);
+			
+			
+			strOut = strOut + "设定概率为:" + iPro + "%," + "结果实验执行概率为:" + iCount/(float)dCount * 100 + "%\n";
+			System.out.println(strOut);
+		}
+		
+		
 	}
 }
