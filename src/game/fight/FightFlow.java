@@ -1,5 +1,6 @@
 package game.fight;
 
+import game.BaseWeight;
 import game.Player;
 
 /*
@@ -26,5 +27,17 @@ public class FightFlow {
 	}
 	
 	
+	
+}
+
+
+
+class FightWight extends BaseWeight{
+	private int id = 0;	//可以是技能id, 武器id
+	
+	public FightWight(int n) {
+		super(n);
+		// TODO Auto-generated constructor stub
+	}
 	
 }
