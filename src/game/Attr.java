@@ -5,9 +5,8 @@ import game.define.SexType;
 /*
  * 属性类
  * */
-public class Attr {
-	int _sex = SexType.SEX_GIRL;
-	
+public class Attr 
+{
 	int _base_hp; //基础生命值
 	int _final_hp;
 	///// 三围属性
@@ -59,6 +58,16 @@ public class Attr {
 		_final_power = _total_base_power + _total_addi_power;
 		_final_minjie = _total_base_minjie + _total_addi_minjie;
 		_final_speed = _total_base_speed + _total_addi_speed;
+		
+		_final_hp = _base_hp;
+	}
+	
+	public void calcFinalOnly(){
+		_final_hp = _base_hp;
+		
+		_final_power = get_total_base_power() + get_total_addi_power();
+		_final_minjie = get_total_base_minjie()  + get_total_addi_minjie();
+		_final_speed = get_total_base_speed() + get_total_addi_speed();
 	}
 	
 	public void clearExceptBaseThree(){
@@ -237,6 +246,7 @@ public class Attr {
 	public void set_final_speed(int _final_speed) {
 		this._final_speed = _final_speed;
 	}
+	
 	
 	
 	// 计算

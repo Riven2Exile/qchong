@@ -1,9 +1,13 @@
 package game;
 
+import game.define.SexType;
+
 public class Player {
 	
 	String _name = "";
 	int _level = 0;
+	int _sex = SexType.SEX_GIRL;
+	
 	Attr _attr = new Attr();
 	
 	// 技能map -> 方便查找
@@ -11,6 +15,10 @@ public class Player {
 	
 	// 武器
 	WeaponHelper _weapon = new WeaponHelper();
+	
+	
+	
+	/* ************* 方法   *************/
 	
 	public void SetName(String s){
 		_name = s;

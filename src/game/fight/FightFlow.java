@@ -16,6 +16,7 @@ import game.WeaponHelper;
 import game.define.WeaponKind;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
+import game.gametest.TestDamage;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
 
@@ -70,8 +71,26 @@ public class FightFlow {
 			nFightWay = attackerCon.getRandomFightWay();
 			id = attackerCon.getRandomID(nFightWay);
 			
-			strOut = "第" + i + "回合, 使用出" + fightWay2String(nFightWay) + " " + id;
+			////// 伤害计算
+			int nSelfDamage = 0;
+			if (FightWayInterface.AW_Weapon == nFightWay){
+				BaseWeapon weapon = p1.GetWeaponHelper().getWeapon(id);
+				if(weapon != null){
+					nSelfDamage = TestDamage.genWeaponDamage(p1, weapon);
+				}
+			}
+			else if(FightWayInterface.AW_EmptyHand == nFightWay){
+				nSelfDamage = TestDamage.genEmptyHandDamage(p1.getAttr());
+			}
+			///// 伤害计算 end
+			
+			strOut = "第" + i + "回合, 使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" + nSelfDamage + "点主观伤害";
 			out.println(strOut);
+			
+			// 自身的消耗计算, 武器减1，技能使用次数+1
+			if (FightWayInterface.AW_Weapon == nFightWay){
+				attackerCon.remove(nFightWay, id);
+			}
 		}
 		
 		// 先随机出此次是 空手攻击，还是武器，还是技能，然后再分别随机各自的子类.... (但是首先，需要取身上可以随机的东西去随机，如果没有武器，怎么随机武器)
@@ -79,7 +98,7 @@ public class FightFlow {
 		// 伤害计算
 		
 		
-		// 自身的消耗计算, 武器减1，技能使用次数+1
+		
 		
 		return 0;
 	}
@@ -91,6 +110,10 @@ public class FightFlow {
 	public void test(){
 		Player p1 = new Player();
 		p1.getAttr().set_base_three(5, 5, 7);
+		p1.getAttr().set_base_hp(200);
+		// todo, 这里可能会加基础属性的buff
+		p1.getAttr().CalcBaseThree();
+		
 		WeaponHelper wh =  p1.GetWeaponHelper();
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0)); //加蛇影弓
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.KUANG_MO_LIAN, 0)); //加狂魔镰
@@ -98,6 +121,11 @@ public class FightFlow {
 		SkillHelper sh = p1.GetSkillHelper();
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
+		
+		p1.getAttr().CalcAddictionThree();
+		p1.getAttr().CalcFinalThree();
+		
+		
 		
 		StartFight(p1, null);
 	}

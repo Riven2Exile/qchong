@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import game.Attr;
+import game.CalcTool;
 import game.Pair;
 import game.Player;
 import game.WeaponHelper;
@@ -68,7 +69,6 @@ public class TestDamage {
 	
 	// 测试空手伤害
 	public static void TestEmptyHandDamage(Attr atkAttr, Attr defAttr){
-		
 		double nMinRange = 1.5;		//空手伤害的范围
 		double nMaxRange = 2.0;
 		
@@ -80,6 +80,15 @@ public class TestDamage {
 	public static int EmptyHandFormat(Attr atkAttr, double factor){
 		int nDamage = (int)Math.floor(atkAttr.get_final_power() * factor);  //猜测公式;
 		return nDamage;
+	}
+	////// 获得空手伤害
+	public static int genEmptyHandDamage(Attr atkAttr){
+		double nMinRange = 1.5;		//空手伤害的范围
+		double nMaxRange = 2.0;
+		
+		int nMinDamage = EmptyHandFormat(atkAttr, nMinRange);  //猜测公式
+		int nMaxDamage = EmptyHandFormat(atkAttr, nMaxRange);
+		return CalcTool.random(nMinDamage, nMaxDamage);
 	}
 	
 	// 测试武器伤害
@@ -116,6 +125,15 @@ public class TestDamage {
 		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.99 + weaponBaseDamage);
 		return nDamage;
 	}
+	//// 生成中型武器伤害
+	public static int genMiddleWeaponDamage(Player attacker, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();	//最小伤害
+		int nMax = weapon.getMaxDamage();	//最大伤害
+		
+		int nMinDamage = MiddleWeaponFormat(attacker, nMin); //猜测公式
+		int nMaxDamage = MiddleWeaponFormat(attacker, nMax);
+		return CalcTool.random(nMinDamage, nMaxDamage);
+	}
 	
 	////////// 【测试大型武器伤害】
 	public static void TestLargeWeaponDamage(Player attacker, Player defender, BaseWeapon weapon){
@@ -132,6 +150,15 @@ public class TestDamage {
 		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 2.2+ weaponBaseDamage);
 		return nDamage;
 	}
+	//// 生成大型武器伤害
+	public static int genLargeWeaponDamage(Player attacker, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();
+		int nMax = weapon.getMaxDamage();
+		
+		int nMinDamage = LargeWeaponFormat(attacker, nMin);
+		int nMaxDamage = LargeWeaponFormat(attacker, nMax);
+		return CalcTool.random(nMinDamage, nMaxDamage);
+	}
 	
 	//////////// 【测试小型武器伤害】
 	public static void TestTinyWeaponDamage(Player attacker, Player defender, BaseWeapon weapon){
@@ -146,6 +173,15 @@ public class TestDamage {
 	public static int TinyWeaponFormat(Player attacker, int weaponBaseDamage){
 		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.5 + weaponBaseDamage);
 		return nDamage;
+	}
+	//// 生成小型武器伤害
+	public static int genTinyWeaponDamage(Player attacker, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();
+		int nMax = weapon.getMaxDamage();
+		
+		int nMinDamage = TinyWeaponFormat(attacker, nMin);
+		int nMaxDamage = TinyWeaponFormat(attacker, nMax);
+		return CalcTool.random(nMinDamage, nMaxDamage);
 	}
 	
 	///////////// 【测试投掷武器伤害】
@@ -162,7 +198,34 @@ public class TestDamage {
 		int nDamage = (int)Math.floor(attacker.getAttr().get_final_power() * 1.5 + weaponBaseDamage);
 		return nDamage;
 	}
+	//// 生成投掷武器伤害
+	public static int genThrowWeaponDamage(Player attacker, BaseWeapon weapon){
+		int nMin = weapon.getMinDamage();
+		int nMax = weapon.getMaxDamage();
+		
+		int nMinDamage = ThrowWeaponFormat(attacker, nMin);
+		int nMaxDamage = ThrowWeaponFormat(attacker, nMax);
+		return CalcTool.random(nMinDamage, nMaxDamage);
+	}
 	
+	
+	////// 生成武器伤害
+	public static int genWeaponDamage(Player attacker, BaseWeapon weapon){
+		int type = weapon.getWeaponType();
+		if(WeaponType.WEAPON_LARGE == type){
+			return genLargeWeaponDamage(attacker, weapon);
+		}else if (WeaponType.WEAPON_MIDDLE == type){
+			return genMiddleWeaponDamage(attacker, weapon);
+		}
+		else if(WeaponType.WEAPON_TINY == type){
+			return genTinyWeaponDamage(attacker, weapon);
+		}
+		else if(WeaponType.WEAPON_THROW == type){
+			return genThrowWeaponDamage(attacker, weapon);
+		}
+		else
+			return 0;
+	}
 	
 	
 	

@@ -21,7 +21,7 @@ public class WeaponHelper {
 	}
 	
 	public BaseWeapon getWeapon(int weaponID){
-		return _weapon.get(_weapon);
+		return _weapon.get(weaponID);
 	}
 	
 	
