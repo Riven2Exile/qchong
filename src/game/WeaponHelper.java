@@ -25,13 +25,14 @@ public class WeaponHelper {
 	}
 	
 	
-	// java中的泛型函数并没有C++那么强大, 因为不能 o.fun(); 的写法
-//	public <T> void ForEach(T o){
-//		for (Entry<Integer, BaseWeapon> entry: _weapon.entrySet() )
-//		{
-//			o.fun(); //弱爆了!
-//		}
-//	}
+	
+	public <T extends ForeachInterface> void ForEach(T o)
+	{
+		for (Entry<Integer, BaseWeapon> entry: _weapon.entrySet() )
+		{
+			o.doFun(entry.getValue());
+		}
+	}
 	
 	
 	///// 【之后最好删掉这个接口！！！】

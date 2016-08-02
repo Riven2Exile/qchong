@@ -4,6 +4,7 @@ import java.lang.System;
 import game.define.WeaponKind;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
+import game.fight.FightFlow;
 import game.gametest.TestDamage;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
@@ -54,11 +55,15 @@ public class test {
 //		a.setLevel(12);
 		
 		
-		//TestDamage.doTest();  //°æ≤¬≤‚…À∫¶°ø
+		//°æ≤¬≤‚…À∫¶°ø
+		//TestDamage.doTest();  
 		
 		//≤‚ ‘ÀÊª˙
-		CalcTool.test();
+		//CalcTool.test();
 		
+		//≤‚ ‘’Ω∂∑¡˜≥Ã
+		FightFlow fightFlow = new FightFlow();
+		fightFlow.test();
 	}
 
 }

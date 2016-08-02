@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class BaseWeightContent {
 
-	ArrayList<BaseWeight> _mData = new ArrayList();
+	ArrayList<BaseWeight> _mData = new ArrayList<>();
 	
 	int _nTotalWeigth = 0;
 	
@@ -74,5 +74,14 @@ public class BaseWeightContent {
 			
 			return -1;
 		}
+	}
+	
+	public BaseWeight getWeightData(){
+		int nIndex = getWeightIndex();
+		if (nIndex == -1){
+			return null;
+		}
+		
+		return _mData.get(nIndex);
 	}
 }

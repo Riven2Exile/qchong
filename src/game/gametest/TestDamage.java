@@ -58,9 +58,9 @@ public class TestDamage {
 						new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
 		
 		//q宠3 8级【测试数据】: 开山斧(24,26)  短剑(13,14)  接力棒()  充气锤子(33,34)  空手(8,10)
-				test.addData("宠3_7级", 5, 6, 7, new Pair[]{new Pair(BaseSkill.SPEED_SKILL, 0)}, 
-						new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
-								new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
+		test.addData("宠3_7级", 5, 6, 7, new Pair[]{new Pair(BaseSkill.SPEED_SKILL, 0)}, 
+				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
+						new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
 		
 		
 		test.start();
