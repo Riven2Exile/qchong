@@ -19,7 +19,7 @@ public abstract class BaseSkill implements SkillInterface{
 	
 	//public abstract void setSkillID(int id);
 	public abstract int getSkillID();
-	public abstract int getSkillType();
+	public abstract int getSkillType(); //技能类型
 	
 	public void CalcAttr(Player player){
 		// 子类有需求再去实现

@@ -2,7 +2,7 @@ package game.skill;
 
 import game.Player;
 
-/*
+/**
  *  技能:快人一步
  * */
 public class SpeedSkill extends BaseSkill{

@@ -17,6 +17,7 @@ import game.define.WeaponKind;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
 import game.gametest.TestDamage;
+import game.skill.BaseSkill;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
 
@@ -55,8 +56,9 @@ public class FightFlow {
 		FightCon attackerCon = new FightCon();
 		
 		attackerCon._nFightWay = FightWayInterface.AW_Weapon;
-		p1.GetWeaponHelper().ForEach(attackerCon); //武器权重流
-		
+		p1.GetWeaponHelper().ForEach(attackerCon); 	//武器权重流
+		attackerCon._nFightWay = FightWayInterface.AW_ActiveMainSkill;
+		p1.GetSkillHelper().ForEach(attackerCon);	//主动技能权重流
 		
 		// todo: “攻击权重随机之前触发型”
 		
@@ -71,6 +73,8 @@ public class FightFlow {
 			nFightWay = attackerCon.getRandomFightWay();
 			id = attackerCon.getRandomID(nFightWay);
 			
+			////// todo: 命中计算
+			
 			////// 伤害计算
 			int nSelfDamage = 0;
 			if (FightWayInterface.AW_Weapon == nFightWay){
@@ -82,6 +86,15 @@ public class FightFlow {
 			else if(FightWayInterface.AW_EmptyHand == nFightWay){
 				nSelfDamage = TestDamage.genEmptyHandDamage(p1.getAttr());
 			}
+			else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
+				BaseSkill skill = p1.GetSkillHelper().getSkill(id);
+				if(skill != null){
+					nSelfDamage = skill.GetDamage(p1);
+				}
+			}
+			
+			// todo:是否有增伤
+			
 			///// 伤害计算 end
 			
 			strOut = "第" + i + "回合, 使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" + nSelfDamage + "点主观伤害";
@@ -120,6 +133,7 @@ public class FightFlow {
 		
 		SkillHelper sh = p1.GetSkillHelper();
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
+		sh.addSkill(SkillFactory.getInstance(SkillInterface.FoShanWuYingJiao_Skill, 0));
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
 		
 		p1.getAttr().CalcAddictionThree();
@@ -228,6 +242,13 @@ class FightCon implements ForeachInterface{
 		if( FightWayInterface.AW_Weapon == _nFightWay ){
 			BaseWeapon w = (BaseWeapon)obj;
 			addWeapon(new FightWight(1, w.getWeaponKind()));
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == _nFightWay){
+			BaseSkill sk = (BaseSkill)obj;
+			if(sk.getSkillType() == BaseSkill.SKILLTYPE_ACTIVE_MAIN){
+				addActiveSkill(new FightWight(1, sk.getSkillID()) );
+			}
+			
 		}
 	}
 }

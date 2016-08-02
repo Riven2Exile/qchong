@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import game.skill.BaseSkill;
+import game.weapon.BaseWeapon;
 
 public class SkillHelper {
 	HashMap<Integer, BaseSkill> _skillMap = new HashMap<>();
@@ -26,6 +27,14 @@ public class SkillHelper {
 	
 	public void ClearSkill() {
 		_skillMap.clear();
+	}
+	
+	public <T extends ForeachInterface> void ForEach(T o)
+	{
+		for (Entry<Integer, BaseSkill> entry: _skillMap.entrySet() )
+		{
+			o.doFun(entry.getValue());
+		}
 	}
 	
 	
