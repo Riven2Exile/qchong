@@ -89,11 +89,13 @@ public class FightFlow {
 			else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
 				BaseSkill skill = p1.GetSkillHelper().getSkill(id);
 				if(skill != null){
-					nSelfDamage = skill.GetDamage(p1);
+					nSelfDamage = skill.getDamage(p1);
 				}
 			}
 			
 			// todo:是否有增伤
+			
+			// todo:被减免
 			
 			///// 伤害计算 end
 			
@@ -122,7 +124,7 @@ public class FightFlow {
 	 */
 	public void test(){
 		Player p1 = new Player();
-		p1.getAttr().set_base_three(5, 5, 7);
+		p1.getAttr().set_base_three(13, 5, 6);
 		p1.getAttr().set_base_hp(200);
 		// todo, 这里可能会加基础属性的buff
 		p1.getAttr().CalcBaseThree();
@@ -133,7 +135,8 @@ public class FightFlow {
 		
 		SkillHelper sh = p1.GetSkillHelper();
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
-		sh.addSkill(SkillFactory.getInstance(SkillInterface.FoShanWuYingJiao_Skill, 0));
+		sh.addSkill(SkillFactory.getInstance(SkillInterface.FoShanWuYingJiao_Skill, 0)); //佛山无影腿
+		sh.addSkill(SkillFactory.getInstance(SkillInterface.LongJuanFeng_Skill, 0));
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
 		
 		p1.getAttr().CalcAddictionThree();

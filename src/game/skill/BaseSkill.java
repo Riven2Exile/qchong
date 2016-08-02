@@ -25,7 +25,7 @@ public abstract class BaseSkill implements SkillInterface{
 		// 子类有需求再去实现
 	}
 	
-	public int GetDamage(Player player) {
+	public int getDamage(Player player) {
 		return 0;
 	}
 }

@@ -47,7 +47,7 @@ public interface SkillInterface {
 	abstract void CalcAttr(Player player);
 	
 	// 造成伤害
-	abstract int GetDamage(Player player);
+	abstract int getDamage(Player player);
 	
 	// buff增益 , dot
 }

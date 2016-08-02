@@ -39,6 +39,41 @@ public class Attr
 	int _final_minjie = 0;
 	int _final_speed = 0;
 	
+	
+	////// 暴击   / 抗暴
+	////// 命中   / 闪避
+	
+	int _addSkillDamage = 0;	//技能伤害值
+	int _subSkillDamage	= 0;	//抗技能伤害值
+	int _addSkillDamagePer	= 0;	//技能增伤百分比
+	int _subSkillDamagePer	= 0;	//佳能伤害减免百分比
+	
+	int _addThrowWeaponDamage	= 0;
+	int _addThrowWeaponDamagePer= 0;
+	int _subThrowWeaponDamage	= 0;
+	int _subThrowWeaponDamagePer= 0;
+	
+	int _addTinyWeaponDamage	= 0;
+	int _addTinyWeaponDamagePer	= 0;
+	int _subTinyWeaponDamage	= 0;
+	int _subTinyWeaponDamagePer	= 0;
+	
+	int _addMidWeaponDamage		= 0;
+	int _addMidWeaponDamagePer	= 0;
+	int _subMidWeaponDamage		= 0;
+	int _subMidWeaponDamagePer	= 0;
+	
+	int _addLargeWeaponDamage	= 0;
+	int _addLargeWeaponDamagePer= 0;
+	int _subLargeWeaponDamage	= 0;
+	int _subLargeWeaponDamagePer= 0;
+	
+	int _addEmptyHandDamage		= 0;
+	int _addEmptyHandDamagePer	= 0;
+	int _subEmptyHandDamage		= 0;
+	int _subEmptyHandDamagePer	= 0;
+	
+	
 	public void CalcBaseThree(){
 		_total_base_power = _base_power + _base_power_buff;
 		_total_base_minjie = _base_minjie + _base_minjie_buff;
@@ -251,6 +286,276 @@ public class Attr
 	
 	// 计算
 	
+	public int get_final_hp() {
+		return _final_hp;
+	}
+
+	public void set_final_hp(int _final_hp) {
+		this._final_hp = _final_hp;
+	}
+
+	public int get_addSkillDamage() {
+		return _addSkillDamage;
+	}
+
+	public void set_addSkillDamage(int _addSkillDamage) {
+		this._addSkillDamage = _addSkillDamage;
+	}
+	public void add_addSkillDamage(int n){
+		this._addSkillDamage += n;
+	}
+
+	public int get_subSkillDamage() {
+		return _subSkillDamage;
+	}
+
+	public void set_subSkillDamage(int _subSkillDamage) {
+		this._subSkillDamage = _subSkillDamage;
+	}
+	public void add_subSkillDamage(int n){
+		this._subSkillDamage += n;
+	}
+
+	public int get_addSkillDamagePer() {
+		return _addSkillDamagePer;
+	}
+
+	public void set_addSkillDamagePer(int _addSkillDamagePer) {
+		this._addSkillDamagePer = _addSkillDamagePer;
+	}
+	public void add_addSkillDamagePer(int n){
+		this._addSkillDamagePer += n;
+	}
+
+	public int get_subSkillDamagePer() {
+		return _subSkillDamagePer;
+	}
+
+	public void set_subSkillDamagePer(int _subSkillDamagePer) {
+		this._subSkillDamagePer = _subSkillDamagePer;
+	}
+	public void add_subSkillDamagePer(int n){
+		this._subSkillDamagePer += n;
+	}
+
+	public int get_addThrowWeaponDamage() {
+		return _addThrowWeaponDamage;
+	}
+
+	public void set_addThrowWeaponDamage(int _addThrowWeaponDamage) {
+		this._addThrowWeaponDamage = _addThrowWeaponDamage;
+	}
+	public void add_addThrowWeaponDamage(int n){
+		this._addThrowWeaponDamage += n;
+	}
+
+	public int get_addThrowWeaponDamagePer() {
+		return _addThrowWeaponDamagePer;
+	}
+
+	public void set_addThrowWeaponDamagePer(int _addThrowWeaponDamagePer) {
+		this._addThrowWeaponDamagePer = _addThrowWeaponDamagePer;
+	}
+	public void add_addThrowWeaponDamagePer(int n){
+		this._addThrowWeaponDamagePer += n;
+	}
+
+	public int get_subThrowWeaponDamage() {
+		return _subThrowWeaponDamage;
+	}
+
+	public void set_subThrowWeaponDamage(int _subThrowWeaponDamage) {
+		this._subThrowWeaponDamage = _subThrowWeaponDamage;
+	}
+	public void add_subThrowWeaponDamage(int n){
+		this._subThrowWeaponDamage += n;
+	}
+
+	public int get_subThrowWeaponDamagePer() {
+		return _subThrowWeaponDamagePer;
+	}
+
+	public void set_subThrowWeaponDamagePer(int _subThrowWeaponDamagePer) {
+		this._subThrowWeaponDamagePer = _subThrowWeaponDamagePer;
+	}
+	public void add_subThrowWeaponDamagePer(int n){
+		this._subThrowWeaponDamagePer += n;
+	}
+
+	public int get_addTinyWeaponDamage() {
+		return _addTinyWeaponDamage;
+	}
+
+	public void set_addTinyWeaponDamage(int _addTinyWeaponDamage) {
+		this._addTinyWeaponDamage = _addTinyWeaponDamage;
+	}
+	public void add_addTinyWeaponDamage(int n){
+		this._addTinyWeaponDamage += n;
+	}
+	
+
+	public int get_addTinyWeaponDamagePer() {
+		return _addTinyWeaponDamagePer;
+	}
+
+	public void set_addTinyWeaponDamagePer(int _addTinyWeaponDamagePer) {
+		this._addTinyWeaponDamagePer = _addTinyWeaponDamagePer;
+	}
+	public void add_addTinyWeaponDamagePer(int n){
+		this._addTinyWeaponDamagePer += n;
+	}
+
+	public int get_subTinyWeaponDamage() {
+		return _subTinyWeaponDamage;
+	}
+
+	public void set_subTinyWeaponDamage(int _subTinyWeaponDamage) {
+		this._subTinyWeaponDamage = _subTinyWeaponDamage;
+	}
+	public void add_subTinyWeaponDamage(int n){
+		this._subTinyWeaponDamage += n;
+	}
+
+	public int get_subTinyWeaponDamagePer() {
+		return _subTinyWeaponDamagePer;
+	}
+
+	public void set_subTinyWeaponDamagePer(int _subTinyWeaponDamagePer) {
+		this._subTinyWeaponDamagePer = _subTinyWeaponDamagePer;
+	}
+	public void add_subTinyWeaponDamagePer(int n){
+		this._subTinyWeaponDamagePer += n;
+	}
+
+	public int get_addMidWeaponDamage() {
+		return _addMidWeaponDamage;
+	}
+
+	public void set_addMidWeaponDamage(int _addMidWeaponDamage) {
+		this._addMidWeaponDamage = _addMidWeaponDamage;
+	}
+
+	public int get_addMidWeaponDamagePer() {
+		return _addMidWeaponDamagePer;
+	}
+
+	public void set_addMidWeaponDamagePer(int _addMidWeaponDamagePer) {
+		this._addMidWeaponDamagePer = _addMidWeaponDamagePer;
+	}
+	public void add_addMidWeaponDamagePer(int n){
+		this._addMidWeaponDamagePer += n;
+	}
+
+	public int get_subMidWeaponDamage() {
+		return _subMidWeaponDamage;
+	}
+
+	public void set_subMidWeaponDamage(int _subMidWeaponDamage) {
+		this._subMidWeaponDamage = _subMidWeaponDamage;
+	}
+	public void add_subMinWeaponDamage(int n){
+		this._subMidWeaponDamage += n;
+	}
+
+	public int get_subMidWeaponDamagePer() {
+		return _subMidWeaponDamagePer;
+	}
+
+	public void set_subMidWeaponDamagePer(int _subMidWeaponDamagePer) {
+		this._subMidWeaponDamagePer = _subMidWeaponDamagePer;
+	}
+	public void add_subMidWeaponDamagePer(int n){
+		this._subMidWeaponDamagePer += n;
+	}
+
+	public int get_addLargeWeaponDamage() {
+		return _addLargeWeaponDamage;
+	}
+
+	public void set_addLargeWeaponDamage(int _addLargeWeaponDamage) {
+		this._addLargeWeaponDamage = _addLargeWeaponDamage;
+	}
+	public void add_addLargeWeaponDamage(int n){
+		this._addLargeWeaponDamage += n;
+	}
+
+	public int get_addLargeWeaponDamagePer() {
+		return _addLargeWeaponDamagePer;
+	}
+
+	public void set_addLargeWeaponDamagePer(int _addLargeWeaponDamagePer) {
+		this._addLargeWeaponDamagePer = _addLargeWeaponDamagePer;
+	}
+	public void add_addLargeWeaponDamagePer(int n){
+		this._addLargeWeaponDamagePer += n;
+	}
+
+	public int get_subLargeWeaponDamage() {
+		return _subLargeWeaponDamage;
+	}
+
+	public void set_subLargeWeaponDamage(int _subLargeWeaponDamage) {
+		this._subLargeWeaponDamage = _subLargeWeaponDamage;
+	}
+	public void add_subLargeWeaponDamage(int n){
+		this._subLargeWeaponDamage += n;
+	}
+
+	public int get_subLargeWeaponDamagePer() {
+		return _subLargeWeaponDamagePer;
+	}
+
+	public void set_subLargeWeaponDamagePer(int _subLargeWeaponDamagePer) {
+		this._subLargeWeaponDamagePer = _subLargeWeaponDamagePer;
+	}
+	public void add_subLargeWeaponDamagePer(int n){
+		this._subLargeWeaponDamagePer += n;
+	}
+
+	public int get_addEmptyHandDamage() {
+		return _addEmptyHandDamage;
+	}
+
+	public void set_addEmptyHandDamage(int _addEmptyHandDamage) {
+		this._addEmptyHandDamage = _addEmptyHandDamage;
+	}
+	public void add_addEmptyHandDamage(int n){
+		this._addEmptyHandDamage += n;
+	}
+
+	public int get_addEmptyHandDamagePer() {
+		return _addEmptyHandDamagePer;
+	}
+
+	public void set_addEmptyHandDamagePer(int _addEmptyHandDamagePer) {
+		this._addEmptyHandDamagePer = _addEmptyHandDamagePer;
+	}
+	public void add_addEmptyHandDamagePer(int n){
+		this._addEmptyHandDamagePer += n;
+	}
+
+	public int get_subEmptyHandDamage() {
+		return _subEmptyHandDamage;
+	}
+
+	public void set_subEmptyHandDamage(int _subEmptyHandDamage) {
+		this._subEmptyHandDamage = _subEmptyHandDamage;
+	}
+	public void add_subEmptyHandDamage(int n){
+		this._subEmptyHandDamage += n;
+	}
+
+	public int get_subEmptyHandDamagePer() {
+		return _subEmptyHandDamagePer;
+	}
+
+	public void set_subEmptyHandDamagePer(int _subEmptyHandDamagePer) {
+		this._subEmptyHandDamagePer = _subEmptyHandDamagePer;
+	}
+	public void add_subEmptyHandDamagePer(int n){
+		this._subEmptyHandDamagePer += n;
+	}
+
 	public void tell(){
 		System.out.println("最终三围:" + this.get_final_power() + "," + this.get_final_minjie() + "," + this.get_final_speed());
 	}
