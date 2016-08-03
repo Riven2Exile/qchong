@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import game.Attr;
 import game.BaseWeight;
 import game.BaseWeightContent;
 import game.ForeachInterface;
@@ -14,6 +15,7 @@ import game.Player;
 import game.SkillHelper;
 import game.WeaponHelper;
 import game.define.WeaponKind;
+import game.define.WeaponType;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
 import game.gametest.TestDamage;
@@ -89,9 +91,11 @@ public class FightFlow {
 		
 		////// 伤害计算
 		int nSelfDamage = 0;
+		int nWeaponType = WeaponType.WEAPON_UNDEFINE; //武器类型
 		if (FightWayInterface.AW_Weapon == nFightWay){
 			BaseWeapon weapon = atk.GetWeaponHelper().getWeapon(id);
 			if(weapon != null){
+				nWeaponType = weapon.getWeaponType();
 				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon);
 			}
 		}
@@ -106,8 +110,12 @@ public class FightFlow {
 		}
 		
 		// todo:是否有增伤
-		
 		// todo:被减免
+		int damageChangeNum = calcDamageNumber(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
+		int damageChangePer = calcDamagePer(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
+		
+		nSelfDamage = nSelfDamage * ((100 + damageChangePer) / 100);
+		nSelfDamage += damageChangeNum;
 		
 		// 血量变化
 		def.getAttr().add_final_hp(-nSelfDamage);
@@ -121,6 +129,61 @@ public class FightFlow {
 		if (FightWayInterface.AW_Weapon == nFightWay){
 			attackerCon.remove(nFightWay, id);
 		}
+	}
+	
+	/**
+	 *  数值型增减伤
+	 * @return
+	 */
+	public int calcDamageNumber(Attr atk, Attr def, int fightway, int weaponType){
+		int n = 0;
+		if (FightWayInterface.AW_EmptyHand == fightway){
+			n = atk.get_addEmptyHandDamage() - def.get_addEmptyHandDamage();
+		}
+		else if(FightWayInterface.AW_Weapon == fightway){
+			if(WeaponType.WEAPON_LARGE == weaponType){
+				n = atk.get_addLargeWeaponDamage() - def.get_addLargeWeaponDamage();
+			}else if(WeaponType.WEAPON_MIDDLE == weaponType){
+				n = atk.get_addMidWeaponDamage() - def.get_addMidWeaponDamage();
+			}else if(WeaponType.WEAPON_TINY == weaponType){
+				n = atk.get_addTinyWeaponDamage() - def.get_addTinyWeaponDamage();
+			}else if(WeaponType.WEAPON_THROW == weaponType){
+				n = atk.get_addThrowWeaponDamage() - def.get_addThrowWeaponDamage();
+			}
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
+			n = atk.get_addSkillDamage() - def.get_addSkillDamage();
+		}
+		
+		
+		return n;
+	}
+	
+	/**
+	 *  百分比增减伤
+	 */
+	public int calcDamagePer(Attr atk, Attr def, int fightway, int weaponType){
+		int n = 0;
+		if (FightWayInterface.AW_EmptyHand == fightway){
+			n = atk.get_addEmptyHandDamagePer() - def.get_addEmptyHandDamagePer();
+		}
+		else if(FightWayInterface.AW_Weapon == fightway){
+			if(WeaponType.WEAPON_LARGE == weaponType){
+				n = atk.get_addLargeWeaponDamagePer() - def.get_addLargeWeaponDamagePer();
+			}else if(WeaponType.WEAPON_MIDDLE == weaponType){
+				n = atk.get_addMidWeaponDamagePer() - def.get_addMidWeaponDamagePer();
+			}else if(WeaponType.WEAPON_TINY == weaponType){
+				n = atk.get_addTinyWeaponDamagePer() - def.get_addTinyWeaponDamagePer();
+			}else if(WeaponType.WEAPON_THROW == weaponType){
+				n = atk.get_addThrowWeaponDamagePer() - def.get_addThrowWeaponDamagePer();
+			}
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
+			n = atk.get_addSkillDamagePer() - def.get_addSkillDamagePer();
+		}
+		
+		
+		return n;
 	}
 	
 	/**
