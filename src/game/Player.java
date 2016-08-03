@@ -28,6 +28,20 @@ public class Player {
 		return _name;
 	}
 	
+	public void setLevel(int l){
+		_level = l;
+	}
+	public int getLevel(){
+		return _level;
+	}
+	
+	public void setSex(int sex){
+		_sex = sex;
+	}
+	public int getSex(){
+		return _sex;
+	}
+	
 	public Attr getAttr(){
 		return _attr;
 	}
@@ -40,11 +54,6 @@ public class Player {
 		return _weapon;
 	}
 	
-	public void setLevel(int l){
-		_level = l;
-	}
-	public int getLevel(){
-		return _level;
-	}
+	
 	// 武器list -> 无须查找,  需要有一个标记, 是否使用
 }

@@ -14,7 +14,7 @@ public class SpeedSkill extends BaseSkill{
 		super(lv);
 	}
 
-	public void CalcAttr(Player player) {
+	public void calcAttr(Player player) {
 		int nAddSpeed = 0;
 		switch (getSkillLv()) {
 		case 0:

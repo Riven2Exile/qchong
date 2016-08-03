@@ -64,60 +64,64 @@ public class FightFlow {
 		
 		// todo: 主要的攻击手段
 		
-		int nFightWay = 0 ;
-		int id = 0 ; 
-		
 		int nHuihe = 20;
-		String strOut;
 		for (int i = 1; i <= nHuihe; ++i){
-			nFightWay = attackerCon.getRandomFightWay();
-			id = attackerCon.getRandomID(nFightWay);
-			
-			////// todo: 命中计算
-			
-			////// 伤害计算
-			int nSelfDamage = 0;
-			if (FightWayInterface.AW_Weapon == nFightWay){
-				BaseWeapon weapon = p1.GetWeaponHelper().getWeapon(id);
-				if(weapon != null){
-					nSelfDamage = TestDamage.genWeaponDamage(p1, weapon);
-				}
-			}
-			else if(FightWayInterface.AW_EmptyHand == nFightWay){
-				nSelfDamage = TestDamage.genEmptyHandDamage(p1.getAttr());
-			}
-			else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
-				BaseSkill skill = p1.GetSkillHelper().getSkill(id);
-				if(skill != null){
-					nSelfDamage = skill.getDamage(p1);
-				}
-			}
-			
-			// todo:是否有增伤
-			
-			// todo:被减免
-			
-			///// 伤害计算 end
-			
-			strOut = "第" + i + "回合, 使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" + nSelfDamage + "点主观伤害";
-			out.println(strOut);
-			
-			// 自身的消耗计算, 武器减1，技能使用次数+1
-			if (FightWayInterface.AW_Weapon == nFightWay){
-				attackerCon.remove(nFightWay, id);
-			}
+			attackOnce(p1, p2, attackerCon, i);
 		}
 		
 		// 先随机出此次是 空手攻击，还是武器，还是技能，然后再分别随机各自的子类.... (但是首先，需要取身上可以随机的东西去随机，如果没有武器，怎么随机武器)
 		
 		// 伤害计算
 		
-		
-		
-		
 		return 0;
 	}
 	
+	/**
+	 * 攻击一次
+	 */
+	public void attackOnce(Player atk, Player def, FightCon attackerCon, int i){
+		int nFightWay = 0 ;
+		int id = 0 ; 
+		nFightWay = attackerCon.getRandomFightWay();
+		id = attackerCon.getRandomID(nFightWay);
+		String strOut;
+		////// todo: 命中计算
+		
+		////// 伤害计算
+		int nSelfDamage = 0;
+		if (FightWayInterface.AW_Weapon == nFightWay){
+			BaseWeapon weapon = atk.GetWeaponHelper().getWeapon(id);
+			if(weapon != null){
+				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon);
+			}
+		}
+		else if(FightWayInterface.AW_EmptyHand == nFightWay){
+			nSelfDamage = TestDamage.genEmptyHandDamage(atk.getAttr());
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
+			BaseSkill skill = atk.GetSkillHelper().getSkill(id);
+			if(skill != null){
+				nSelfDamage = skill.getDamage(atk, def);
+			}
+		}
+		
+		// todo:是否有增伤
+		
+		// todo:被减免
+		
+		// 血量变化
+		def.getAttr().add_final_hp(-nSelfDamage);
+		
+		
+		///// 伤害计算 end
+		strOut = "第" + i + "回合, 使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" + nSelfDamage + "点主观伤害, 对方剩余血量" + def.getAttr().get_final_hp();
+		out.println(strOut);
+		
+		// 自身的消耗计算, 武器减1，技能使用次数+1
+		if (FightWayInterface.AW_Weapon == nFightWay){
+			attackerCon.remove(nFightWay, id);
+		}
+	}
 	
 	/**
 	 * test 
@@ -128,6 +132,10 @@ public class FightFlow {
 		p1.getAttr().set_base_hp(200);
 		// todo, 这里可能会加基础属性的buff
 		p1.getAttr().CalcBaseThree();
+		
+		Player wood = new Player();
+		wood.getAttr().set_base_hp(800);
+		wood.getAttr().CalcFinalThree();
 		
 		WeaponHelper wh =  p1.GetWeaponHelper();
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0)); //加蛇影弓
@@ -144,7 +152,7 @@ public class FightFlow {
 		
 		
 		
-		StartFight(p1, null);
+		StartFight(p1, wood);
 	}
 	
 }

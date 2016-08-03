@@ -42,12 +42,14 @@ public interface SkillInterface {
 	int SKILLTYPE_UNDEFINE	= 0;	//未定义技能类型
 	int SKILLTYPE_FOREVER 	= 1;	//永久型    (一般为加永久属性的技能)
 	int SKILLTYPE_ACTIVE_MAIN = 2;	//主动技能 () 
+	int SKILLTYPE_ACTIVE_TRIGGER = 3; 	//主动触发型 (如攻击两次, 残影)
+	int SKILLTYPE_ATTACKED_TRIGGER = 4;	//被动触发性(如反击 )
 	
 	// 计算属性 , 是否可以增加 buff增益(如命中等)
-	abstract void CalcAttr(Player player);
+	abstract void calcAttr(Player player);
 	
 	// 造成伤害
-	abstract int getDamage(Player player);
+	abstract int getDamage(Player attacker, Player defender);
 	
 	// buff增益 , dot
 }

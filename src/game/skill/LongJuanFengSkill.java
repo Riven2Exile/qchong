@@ -21,10 +21,10 @@ public class LongJuanFengSkill extends BaseSkill {
 		return SkillInterface.SKILLTYPE_ACTIVE_MAIN;
 	}
 
-	public int getDamage(Player player) {
+	public int getDamage(Player attacker, Player defender) {
 		int lv = getSkillLv();
 		if(lv == 0) {
-			return (int)Math.floor( 20 + player.getAttr().get_final_power() * 0.8 );
+			return (int)Math.floor( 20 + attacker.getAttr().get_final_power() * 0.8 );
 		}
 		return 0;
 	}

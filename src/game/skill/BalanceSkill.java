@@ -13,7 +13,7 @@ public class BalanceSkill extends BaseSkill {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void CalcAttr(Player player) {
+	public void calcAttr(Player player) {
 		int nAddPower = 0;
 		int nAddMinjie = 0;
 		int nAddSpeed = 0;

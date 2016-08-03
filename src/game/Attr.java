@@ -7,8 +7,10 @@ import game.define.SexType;
  * */
 public class Attr 
 {
-	int _base_hp; //基础生命值
-	int _final_hp;
+	int _base_hp = 0; 	//基础生命值
+	int _addi_hp = 0;	//附加生命值
+	int _final_hp = 0;	//最终生命值,战斗使用
+	int _max_hp = 0;	//最大生命值
 	///// 三围属性
 	int _base_power = 0;
 	int _base_minjie = 0;
@@ -94,11 +96,13 @@ public class Attr
 		_final_minjie = _total_base_minjie + _total_addi_minjie;
 		_final_speed = _total_base_speed + _total_addi_speed;
 		
-		_final_hp = _base_hp;
+		_final_hp = _base_hp + this.get_addi_hp();
+		this._max_hp = _final_hp;
 	}
 	
 	public void calcFinalOnly(){
-		_final_hp = _base_hp;
+		_final_hp = _base_hp + this.get_addi_hp();
+		this._max_hp = _final_hp;
 		
 		_final_power = get_total_base_power() + get_total_addi_power();
 		_final_minjie = get_total_base_minjie()  + get_total_addi_minjie();
@@ -138,6 +142,37 @@ public class Attr
 	public void set_base_hp(int _base_hp) {
 		this._base_hp = _base_hp;
 	}
+	
+	public int get_addi_hp(){
+		return this._addi_hp;
+	}
+	public void set_addi_hp(int n){
+		this._addi_hp = n;
+	}
+	public void add_addi_hp(int n){
+		this._addi_hp += n;
+	}
+
+	public int get_final_hp(){
+		return this._final_hp;
+	}
+	public void set_final_hp(int _final_hp) {
+		this._final_hp = _final_hp;
+	}
+	public void add_final_hp(int n){
+		if(this._final_hp + n <= this._max_hp){
+			_final_hp += n;
+		}
+	}
+	
+	public void set_max_hp(int n){
+		this._max_hp += n;
+	}
+	public int get_max_hp(){
+		return this._max_hp;
+	}
+	
+	
 	public int get_base_power() {
 		return _base_power;
 	}
@@ -284,15 +319,7 @@ public class Attr
 	
 	
 	
-	// 计算
-	
-	public int get_final_hp() {
-		return _final_hp;
-	}
-
-	public void set_final_hp(int _final_hp) {
-		this._final_hp = _final_hp;
-	}
+	// 计算高级属性
 
 	public int get_addSkillDamage() {
 		return _addSkillDamage;

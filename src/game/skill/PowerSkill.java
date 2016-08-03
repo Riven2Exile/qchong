@@ -13,7 +13,7 @@ public class PowerSkill extends BaseSkill{
 	}
 
 
-	public void CalcAttr(Player player) {
+	public void calcAttr(Player player) {
 		int nAddPower = 0;
 		switch (getSkillLv()) {
 		case 0:

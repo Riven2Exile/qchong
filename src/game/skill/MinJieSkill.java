@@ -13,7 +13,7 @@ public class MinJieSkill extends BaseSkill {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void CalcAttr(Player player) {
+	public void calcAttr(Player player) {
 		int nAddMinjie = 0;
 		int nTotalBaseMinjie = player.getAttr().get_total_base_minjie();
 		switch (getSkillLv()) {

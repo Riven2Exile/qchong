@@ -21,11 +21,11 @@ public abstract class BaseSkill implements SkillInterface{
 	public abstract int getSkillID();
 	public abstract int getSkillType(); //技能类型
 	
-	public void CalcAttr(Player player){
+	public void calcAttr(Player player){
 		// 子类有需求再去实现
 	}
 	
-	public int getDamage(Player player) {
+	public int getDamage(Player attacker, Player defender) {
 		return 0;
 	}
 }
