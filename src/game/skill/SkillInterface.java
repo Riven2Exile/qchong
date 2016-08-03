@@ -32,9 +32,33 @@ public interface SkillInterface {
 	public final static int JiaoShui_Skill		= 24;	//胶水
 	public final static int TianShiZhiYi_Skill	= 25;	//天使之翼
 	public final static int FoShanWuYingJiao_Skill	= 26;	//佛山无影脚
-	//public final static int  //6.武器好手
-	//7.肉搏好手
-	//8.第六感
+	public final static int ShiRuBaoYu_Skill	= 27;	//势如暴雨
+	public final static int QiEHou_Skill		= 28;	//企鹅吼
+	public final static int QiERaoYang_Skill	= 29;	//企鹅挠痒
+	public final static int ShiFuJiaDao_Skill	= 30;	//师傅驾到
+	public final static int RuLaiShenZhang_Skill= 31;	//如来神掌
+	public final static int ShiXue_Skill		= 32;	//嗜血
+	public final static int YiJinJing_Skill 	= 33;	//易筋经
+	public final static int AnRanYiJi_Skill		= 34;	//黯然一击
+	public final static int ChongFeng_Skill		= 35;	//冲锋
+	public final static int DouDouQuan_Skill	= 36;	//抖抖拳
+	public final static int JiFengBu_Skill		= 37;	//疾风步
+	public final static int XiuXinShu_Skill		= 38;	//修心术
+	public final static int MingYueDao_Skill	= 39;	//明月刀
+	public final static int XueJiShu_Skill		= 40;	//血祭术
+	public final static int RenPinBaoFa_Skill	= 41;	//人品爆发
+	public final static int QiGong_Skill		= 42;	//气功
+	public final static int ChongJiBo_Skill		= 43;	//冲击波
+	public final static int CiKeZhiShu_Skill	= 44;	//刺客之术
+	public final static int MengJiangZhiLi_Skill= 45;	//猛将之力
+	public final static int DianXue_Skill		= 46;	//点穴
+	public final static int JianKeZhiLing_Skill	= 47;	//剑客之灵
+	public final static int ShenZhiZhuFu_Skill	= 48;	//神之祝福
+	public final static int TaiJiQuanFa_Skill	= 49;	//太极拳法
+	public final static int QiLiaoShu_Skill		= 50;	//气疗术
+	public final static int TianCanJiao_Skill	= 51;	//天残脚
+	public final static int GuiYingCanShen_Skill= 52;	//鬼影缠身
+	public final static int BiXieJianPu_Skill	= 53;	//辟邪剑谱
 	
 	
 	
