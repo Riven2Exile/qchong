@@ -38,7 +38,7 @@ public class SkillHelper {
 	}
 	
 	
-	public void ReCaclForeverAttr(Player p) {
+	public void reCaclForeverAttr(Player p) {
 		for (Entry<Integer, BaseSkill> entry : _skillMap.entrySet()){
 			if(entry.getValue().getSkillType() == BaseSkill.SKILLTYPE_FOREVER){
 				entry.getValue().calcAttr(p);

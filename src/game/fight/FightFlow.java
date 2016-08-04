@@ -68,7 +68,28 @@ public class FightFlow {
 		
 		int nHuihe = 20;
 		for (int i = 1; i <= nHuihe; ++i){
+			// 先不考虑速度的概念, 每人各打一次
 			attackOnce(p1, p2, attackerCon, i);
+			
+			if(p1.getAttr().get_final_hp() <= 0){
+				out.println(p1.GetPlayerName() + "死亡了!"); 
+				break;
+			}
+			if(p2.getAttr().get_final_hp() <= 0){
+				out.println(p2.GetPlayerName() + "死亡了!"); 
+				break;
+			}
+			
+			
+			attackOnce(p2, p1, attackerCon, i);
+			if(p1.getAttr().get_final_hp() <= 0){
+				out.println(p1.GetPlayerName() + "死亡了!"); 
+				break;
+			}
+			if(p2.getAttr().get_final_hp() <= 0){
+				out.println(p2.GetPlayerName() + "死亡了!"); 
+				break;
+			}
 		}
 		
 		// 先随机出此次是 空手攻击，还是武器，还是技能，然后再分别随机各自的子类.... (但是首先，需要取身上可以随机的东西去随机，如果没有武器，怎么随机武器)
@@ -109,20 +130,33 @@ public class FightFlow {
 			}
 		}
 		
-		// todo:是否有增伤
-		// todo:被减免
-		int damageChangeNum = calcDamageNumber(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
+		// ---->>>>>>> 增减伤   百分比  &  数值型   
 		int damageChangePer = calcDamagePer(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
+		nSelfDamage = (int)Math.floor( nSelfDamage * ((100 + damageChangePer) / (double)100) );
 		
-		nSelfDamage = nSelfDamage * ((100 + damageChangePer) / 100);
+		int damageChangeNum = calcDamageNumber(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
 		nSelfDamage += damageChangeNum;
+		
+		// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次  attackOnce方法
+		
 		
 		// 血量变化
 		def.getAttr().add_final_hp(-nSelfDamage);
 		
+		// todo: 判断死亡, 触发临死技能, 有顺序的，一般是是装死技能
+		if( def.getAttr().get_final_hp() <= 0){
+			// todo
+			BaseSkill sk = def.GetSkillHelper().getSkill(SkillInterface.ZhuangSi_Skill);
+			if (sk != null && sk.getUseCount() < 1){
+				sk.calcAttr(def);
+				sk.addUseCount(1);
+				out.println(def.GetPlayerName() + "触发了装死技能!");//print
+			}
+		}
 		
 		///// 伤害计算 end
-		strOut = "第" + i + "回合, 使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" + nSelfDamage + "点主观伤害, 对方剩余血量" + def.getAttr().get_final_hp();
+		strOut = "第" + i + "回合, [" + atk.GetPlayerName() + "]使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" 
+		+ nSelfDamage + "点主观伤害, [" + def.GetPlayerName() + "]剩余血量" + def.getAttr().get_final_hp() + "/" + def.getAttr().get_max_hp();
 		out.println(strOut);
 		
 		// 自身的消耗计算, 武器减1，技能使用次数+1
@@ -187,18 +221,21 @@ public class FightFlow {
 	}
 	
 	/**
-	 * test 
+	 * test 测试
 	 */
 	public void test(){
 		Player p1 = new Player();
+		p1.SetName("测试者1");
 		p1.getAttr().set_base_three(13, 5, 6);
 		p1.getAttr().set_base_hp(200);
 		// todo, 这里可能会加基础属性的buff
 		p1.getAttr().CalcBaseThree();
 		
-		Player wood = new Player();
-		wood.getAttr().set_base_hp(800);
+		Player wood = new Player();	//木桩
+		wood.SetName("木桩");
+		wood.getAttr().set_base_hp(500);
 		wood.getAttr().CalcFinalThree();
+		wood.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.ZhuangSi_Skill, 0));	//装死
 		
 		WeaponHelper wh =  p1.GetWeaponHelper();
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0)); //加蛇影弓
@@ -206,10 +243,14 @@ public class FightFlow {
 		
 		SkillHelper sh = p1.GetSkillHelper();
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
-		sh.addSkill(SkillFactory.getInstance(SkillInterface.FoShanWuYingJiao_Skill, 0)); //佛山无影腿
-		sh.addSkill(SkillFactory.getInstance(SkillInterface.LongJuanFeng_Skill, 0));
+		//sh.addSkill(SkillFactory.getInstance(SkillInterface.FoShanWuYingJiao_Skill, 0)); 	//佛山无影腿
+		//sh.addSkill(SkillFactory.getInstance(SkillInterface.LongJuanFeng_Skill, 0));		//龙卷风
+		sh.addSkill(SkillFactory.getInstance(SkillInterface.HAND_GOOD_SKILL, 0));	//肉搏好手
+		sh.addSkill(SkillFactory.getInstance(SkillInterface.WEAPON_GOOD_SKILL, 0));	//武器好手
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
 		
+		/// 下面的计算语句可以抽取成函数
+		p1.GetSkillHelper().reCaclForeverAttr(p1);
 		p1.getAttr().CalcAddictionThree();
 		p1.getAttr().CalcFinalThree();
 		

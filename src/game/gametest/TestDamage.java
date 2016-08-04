@@ -264,7 +264,7 @@ public class TestDamage {
 			}
 			
 			//// 计算永久型技能带来的加成
-			p.GetSkillHelper().ReCaclForeverAttr(p);
+			p.GetSkillHelper().reCaclForeverAttr(p);
 			p.getAttr().CalcFinalThree(); //计算总属性
 			if( weapon != null){
 				for (int i = 0; i < weapon.length; ++i) {

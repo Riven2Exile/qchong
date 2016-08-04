@@ -25,7 +25,7 @@ public interface SkillInterface {
 	public final static int GuanYongZhongWu_Skill	= 17;	//惯用重物
 	public final static int BiZhongJiuQing_Skill	= 18;	//避重就轻
 	public final static int ShenLaiYiJi_Skill		= 19;	//神来一击
-	public final static int ZhuanSi_Skill		= 20;	//装死
+	public final static int ZhuangSi_Skill		= 20;	//装死
 	public final static int JiaoXie_Skill		= 21;	//缴械
 	public final static int CanYing_Skill		= 22;	//残影
 	public final static int KuangQuanShui_Skill	= 23;	//矿泉水
@@ -68,6 +68,7 @@ public interface SkillInterface {
 	int SKILLTYPE_ACTIVE_MAIN = 2;	//主动技能 () 
 	int SKILLTYPE_ACTIVE_TRIGGER = 3; 	//主动触发型 (如攻击两次, 残影)
 	int SKILLTYPE_ATTACKED_TRIGGER = 4;	//被动触发性(如反击 )
+	int SKILLTYPE_DYING_TRIGGER = 5;	//濒死触发性(如装死)
 	
 	// 计算属性 , 是否可以增加 buff增益(如命中等)
 	abstract void calcAttr(Player player);

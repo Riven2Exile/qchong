@@ -27,7 +27,7 @@ public class test {
 		//todo:增加技能  --> push_back
 		p.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
 		//计算技能加成
-		p.GetSkillHelper().ReCaclForeverAttr(p);
+		p.GetSkillHelper().reCaclForeverAttr(p);
 		p.getAttr().CalcFinalThree();
 		BaseWeapon weapon = WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0);
 		System.out.println("增加了武器:"+weapon.getWeaponKind());

@@ -162,6 +162,9 @@ public class Attr
 	public void add_final_hp(int n){
 		if(this._final_hp + n <= this._max_hp){
 			_final_hp += n;
+			if(_final_hp < 0){
+				_final_hp = 0;
+			}
 		}
 	}
 	

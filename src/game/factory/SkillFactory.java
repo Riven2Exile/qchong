@@ -13,6 +13,7 @@ import game.skill.PowerSkill;
 import game.skill.RehitSkill;
 import game.skill.SpeedSkill;
 import game.skill.WeaponGoodSkill;
+import game.skill.ZhuangSiSkill;
 
 public class SkillFactory {
 	public static BaseSkill getInstance(int id, int lv){
@@ -31,6 +32,8 @@ public class SkillFactory {
 		
 		
 		case BaseSkill.LongJuanFeng_Skill : return new LongJuanFengSkill(lv);	//龙卷风
+		
+		case BaseSkill.ZhuangSi_Skill: return new ZhuangSiSkill(lv);	//装死
 		
 		case BaseSkill.FoShanWuYingJiao_Skill: return new FoShanWuYingJiaoSkill(lv);	//佛山无影脚
 		default: return null;
