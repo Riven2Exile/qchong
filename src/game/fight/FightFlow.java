@@ -69,7 +69,7 @@ public class FightFlow {
 		int nHuihe = 20;
 		for (int i = 1; i <= nHuihe; ++i){
 			// 先不考虑速度的概念, 每人各打一次
-			attackOnce(p1, p2, attackerCon, i);
+			attackOnce(p1, p2, attackerCon, i);	// 【攻击一次】
 			
 			if(p1.getAttr().get_final_hp() <= 0){
 				out.println(p1.GetPlayerName() + "死亡了!"); 
@@ -130,12 +130,34 @@ public class FightFlow {
 			}
 		}
 		
-		// ---->>>>>>> 增减伤   百分比  &  数值型   
-		int damageChangePer = calcDamagePer(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
-		nSelfDamage = (int)Math.floor( nSelfDamage * ((100 + damageChangePer) / (double)100) );
 		
-		int damageChangeNum = calcDamageNumber(atk.getAttr(), def.getAttr(), nFightWay, nWeaponType);
-		nSelfDamage += damageChangeNum;
+		// ---->>>>>>>  数值型增伤
+		int nAddDamageChangeNum = calcAddDamageNumber(atk.getAttr(), nFightWay, nWeaponType);
+		if(nAddDamageChangeNum > 0){
+			nSelfDamage += nAddDamageChangeNum;
+		}
+		// ---->>>>>>>  百分比增伤
+		int nAddDamageChangePer = calcAddDamagePer(atk.getAttr(), nFightWay, nWeaponType);
+		if(nAddDamageChangePer > 0){
+			nSelfDamage = (int)Math.floor( nSelfDamage * ((100 + nAddDamageChangePer) / (double)100) );
+		}
+		
+		// ---->>>>>>>  数值型减伤
+		int nSubDamageChangeNum = calcSubDamageNumber(def.getAttr(), nFightWay, nWeaponType);
+		if(nSubDamageChangeNum > 0){
+			nSelfDamage -= nSubDamageChangeNum;
+			if(nSelfDamage < 0){
+				nSelfDamage = 0;
+			}
+		}
+		// ---->>>>>>>  百分比减伤
+		int nSubDamageChangePer = calcSubDamagePer(def.getAttr(), nFightWay, nWeaponType); //减伤应该最多只能减 100%吧
+		if(nSelfDamage > 0 && nSubDamageChangePer > 0){
+			nSelfDamage = nSelfDamage - (int)Math.floor(nSelfDamage * ((100 - nSubDamageChangePer)/(double)100) ); //
+			if(nSelfDamage < 0){
+				nSelfDamage = 0;
+			}
+		}
 		
 		// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次  attackOnce方法
 		
@@ -166,57 +188,106 @@ public class FightFlow {
 	}
 	
 	/**
-	 *  数值型增减伤
+	 *  计算数值型增伤
 	 * @return
 	 */
-	public int calcDamageNumber(Attr atk, Attr def, int fightway, int weaponType){
+	public int calcAddDamageNumber(Attr atk, int fightway, int weaponType){
 		int n = 0;
 		if (FightWayInterface.AW_EmptyHand == fightway){
-			n = atk.get_addEmptyHandDamage() - def.get_addEmptyHandDamage();
+			n = atk.get_addEmptyHandDamage();
 		}
 		else if(FightWayInterface.AW_Weapon == fightway){
 			if(WeaponType.WEAPON_LARGE == weaponType){
-				n = atk.get_addLargeWeaponDamage() - def.get_addLargeWeaponDamage();
+				n = atk.get_addLargeWeaponDamage();
 			}else if(WeaponType.WEAPON_MIDDLE == weaponType){
-				n = atk.get_addMidWeaponDamage() - def.get_addMidWeaponDamage();
+				n = atk.get_addMidWeaponDamage();
 			}else if(WeaponType.WEAPON_TINY == weaponType){
-				n = atk.get_addTinyWeaponDamage() - def.get_addTinyWeaponDamage();
+				n = atk.get_addTinyWeaponDamage();
 			}else if(WeaponType.WEAPON_THROW == weaponType){
-				n = atk.get_addThrowWeaponDamage() - def.get_addThrowWeaponDamage();
+				n = atk.get_addThrowWeaponDamage();
 			}
 		}
 		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
-			n = atk.get_addSkillDamage() - def.get_addSkillDamage();
+			n = atk.get_addSkillDamage();
 		}
-		
 		
 		return n;
 	}
 	
 	/**
-	 *  百分比增减伤
+	 *  计算百分比增伤
 	 */
-	public int calcDamagePer(Attr atk, Attr def, int fightway, int weaponType){
+	public int calcAddDamagePer(Attr atk, int fightway, int weaponType){
 		int n = 0;
 		if (FightWayInterface.AW_EmptyHand == fightway){
-			n = atk.get_addEmptyHandDamagePer() - def.get_addEmptyHandDamagePer();
+			n = atk.get_addEmptyHandDamagePer();
 		}
 		else if(FightWayInterface.AW_Weapon == fightway){
 			if(WeaponType.WEAPON_LARGE == weaponType){
-				n = atk.get_addLargeWeaponDamagePer() - def.get_addLargeWeaponDamagePer();
+				n = atk.get_addLargeWeaponDamagePer();
 			}else if(WeaponType.WEAPON_MIDDLE == weaponType){
-				n = atk.get_addMidWeaponDamagePer() - def.get_addMidWeaponDamagePer();
+				n = atk.get_addMidWeaponDamagePer();
 			}else if(WeaponType.WEAPON_TINY == weaponType){
-				n = atk.get_addTinyWeaponDamagePer() - def.get_addTinyWeaponDamagePer();
+				n = atk.get_addTinyWeaponDamagePer();
 			}else if(WeaponType.WEAPON_THROW == weaponType){
-				n = atk.get_addThrowWeaponDamagePer() - def.get_addThrowWeaponDamagePer();
+				n = atk.get_addThrowWeaponDamagePer();
 			}
 		}
 		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
-			n = atk.get_addSkillDamagePer() - def.get_addSkillDamagePer();
+			n = atk.get_addSkillDamagePer();
 		}
 		
+		return n;
+	}
+	
+	/**
+	 *  计算数值型减伤
+	 */
+	public int calcSubDamageNumber(Attr def, int fightway, int weaponType){
+		int n = 0;
+		if (FightWayInterface.AW_EmptyHand == fightway){
+			n = def.get_subEmptyHandDamage();
+		}
+		else if(FightWayInterface.AW_Weapon == fightway){
+			if(WeaponType.WEAPON_LARGE == weaponType){
+				n = def.get_subLargeWeaponDamage();
+			}else if(WeaponType.WEAPON_MIDDLE == weaponType){
+				n = def.get_subMidWeaponDamage();
+			}else if(WeaponType.WEAPON_TINY == weaponType){
+				n = def.get_subTinyWeaponDamage();
+			}else if(WeaponType.WEAPON_THROW == weaponType){
+				n = def.get_subThrowWeaponDamage();
+			}
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
+			n = def.get_subSkillDamage();
+		}
 		
+		return n;
+	}
+	
+	/**
+	 * 计算百分比减伤
+	 */
+	public int calcSubDamagePer(Attr def, int fightway, int weaponType){
+		int n = 0;
+		if (FightWayInterface.AW_EmptyHand == fightway){
+			n = def.get_subEmptyHandDamagePer();
+		}
+		else if(FightWayInterface.AW_Weapon == fightway){
+			if(WeaponType.WEAPON_LARGE == weaponType){
+				n = def.get_subLargeWeaponDamagePer();
+			}else if(WeaponType.WEAPON_MIDDLE == weaponType){
+				n = def.get_subMidWeaponDamagePer();
+			}else if(WeaponType.WEAPON_TINY == weaponType){
+				n = def.get_subTinyWeaponDamagePer();
+			}else if(WeaponType.WEAPON_THROW == weaponType){
+				n = def.get_subThrowWeaponDamagePer();
+			}
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
+			n = def.get_subSkillDamagePer();
+		}
 		return n;
 	}
 	
