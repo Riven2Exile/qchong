@@ -9,4 +9,14 @@ public interface BuffInterface {
 	 * 获得buffID
 	 */
 	int getBuffID();
+	
+	/**
+	 * 获得Buff之后的
+	 */
+	void onAddBuff();
+	
+	/**
+	 * buff清除之后
+	 */
+	void onClearBuff();
 }
