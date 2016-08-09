@@ -13,9 +13,9 @@ public class MinJieSkill extends BaseSkill {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void calcAttr(Player player) {
+	public void takeEffect(Player attacker, Player defender) {
 		int nAddMinjie = 0;
-		int nTotalBaseMinjie = player.getAttr().get_total_base_minjie();
+		int nTotalBaseMinjie = attacker.getAttr().get_total_base_minjie();
 		switch (getSkillLv()) {
 		case 0:
 			nAddMinjie = (int)Math.floor( nTotalBaseMinjie * 0.5 + 3); //【公式待确定】
@@ -25,7 +25,7 @@ public class MinJieSkill extends BaseSkill {
 			break;
 		}
 		
-		player.getAttr().add_addi_minjie_skill(nAddMinjie); //增加技能敏捷加成
+		attacker.getAttr().add_addi_minjie_skill(nAddMinjie); //增加技能敏捷加成
 	}
 
 	@Override

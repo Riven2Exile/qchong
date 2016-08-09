@@ -13,18 +13,18 @@ public class PowerSkill extends BaseSkill{
 	}
 
 
-	public void calcAttr(Player player) {
+	public void takeEffect(Player attacker, Player defender) {
 		int nAddPower = 0;
 		switch (getSkillLv()) {
 		case 0:
-			nAddPower = (int)Math.floor( player.getAttr().get_total_base_power() * 0.5 + 3); //【公式待确定】
+			nAddPower = (int)Math.floor( attacker.getAttr().get_total_base_power() * 0.5 + 3); //【公式待确定】
 			break;
 
 		default:
 			break;
 		}
 		
-		player.getAttr().add_addi_power_skill(nAddPower); //增加技能力量加成
+		attacker.getAttr().add_addi_power_skill(nAddPower); //增加技能力量加成
 	}
 
 

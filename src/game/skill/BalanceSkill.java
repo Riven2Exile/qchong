@@ -13,14 +13,14 @@ public class BalanceSkill extends BaseSkill {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void calcAttr(Player player) {
+	public void takeEffect(Player attacker, Player defender) {
 		int nAddPower = 0;
 		int nAddMinjie = 0;
 		int nAddSpeed = 0;
 		
-		int nTotalBasePower = player.getAttr().get_total_base_power();
-		int nTotalBaseMinjie = player.getAttr().get_total_base_minjie();
-		int nTotalBaseSpeed = player.getAttr().get_total_base_speed();
+		int nTotalBasePower = attacker.getAttr().get_total_base_power();
+		int nTotalBaseMinjie = attacker.getAttr().get_total_base_minjie();
+		int nTotalBaseSpeed = attacker.getAttr().get_total_base_speed();
 		
 		switch (getSkillLv()) {
 		case 0:
@@ -33,9 +33,9 @@ public class BalanceSkill extends BaseSkill {
 			break;
 		}
 		
-		player.getAttr().add_addi_power_skill(nAddPower);
-		player.getAttr().add_addi_minjie_skill(nAddMinjie); //增加技能敏捷加成
-		player.getAttr().add_addi_speed_skill(nAddSpeed);
+		attacker.getAttr().add_addi_power_skill(nAddPower);
+		attacker.getAttr().add_addi_minjie_skill(nAddMinjie); //增加技能敏捷加成
+		attacker.getAttr().add_addi_speed_skill(nAddSpeed);
 	}
 
 	@Override

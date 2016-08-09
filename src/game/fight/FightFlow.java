@@ -68,6 +68,14 @@ public class FightFlow {
 		
 		int nHuihe = 20;
 		for (int i = 1; i <= nHuihe; ++i){
+			
+			// 确定到某人的流程,
+			p1.GetFightBuffHelper().onARoundStart();
+			if (p1.isDie()) {
+				out.println(p1.GetPlayerName() + "死亡了！");
+				break;
+			}
+			
 			// 先不考虑速度的概念, 每人各打一次
 			attackOnce(p1, p2, attackerCon, i);	// 【攻击一次】
 			
@@ -80,7 +88,11 @@ public class FightFlow {
 				break;
 			}
 			
-			
+			p2.GetFightBuffHelper().onARoundStart();
+			if(p2.isDie()){
+				out.println(p2.GetPlayerName()+"死亡了！");
+				break;
+			}
 			attackOnce(p2, p1, attackerCon, i);
 			if(p1.getAttr().get_final_hp() <= 0){
 				out.println(p1.GetPlayerName() + "死亡了!"); 
@@ -126,7 +138,8 @@ public class FightFlow {
 		else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
 			BaseSkill skill = atk.GetSkillHelper().getSkill(id);
 			if(skill != null){
-				nSelfDamage = skill.getDamage(atk, def);
+				nSelfDamage = skill.getDamage(atk, def); //计算伤害
+				skill.takeEffect(atk, def); //触发效果
 			}
 		}
 		
@@ -170,7 +183,7 @@ public class FightFlow {
 			// todo
 			BaseSkill sk = def.GetSkillHelper().getSkill(SkillInterface.ZhuangSi_Skill);
 			if (sk != null && sk.getUseCount() < 1){
-				sk.calcAttr(def);
+				sk.takeEffect(def, null);
 				sk.addUseCount(1);
 				out.println(def.GetPlayerName() + "触发了装死技能!");//print
 			}
@@ -318,6 +331,7 @@ public class FightFlow {
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.LongJuanFeng_Skill, 0));		//龙卷风
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.HAND_GOOD_SKILL, 0));	//肉搏好手
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.WEAPON_GOOD_SKILL, 0));	//武器好手
+		sh.addSkill(SkillFactory.getInstance(SkillInterface.QiENaoYang_Skill, 0));	//企鹅挠痒
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
 		
 		/// 下面的计算语句可以抽取成函数

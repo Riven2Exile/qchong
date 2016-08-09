@@ -27,9 +27,9 @@ public class HpSkill extends BaseSkill {
 		return SKILLTYPE_FOREVER;
 	}
 
-	public void calcAttr(Player player){
+	public void takeEffect(Player attacker, Player defender){
 		int lv = getSkillLv();
-		Attr attr = player.getAttr();
+		Attr attr = attacker.getAttr();
 		if(0 == lv){
 			attr.add_addi_hp(  (int) Math.floor(attr.get_base_hp() * 0.15 + 8 )   );
 		}

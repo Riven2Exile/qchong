@@ -23,9 +23,9 @@ public class WeaponGoodSkill extends BaseSkill {
 	}
 
 	@Override
-	public void calcAttr(Player player){
+	public void takeEffect(Player attacker, Player defender){
 		int lv = getSkillLv();
-		Attr attr = player.getAttr();
+		Attr attr = attacker.getAttr();
 		if (0 == lv){
 			attr.add_addLargeWeaponDamagePer(20); //20%
 			attr.add_addMidWeaponDamagePer(20);

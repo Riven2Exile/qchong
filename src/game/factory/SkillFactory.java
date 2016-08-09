@@ -3,6 +3,7 @@ package game.factory;
 import game.skill.AttackDoubleSkill;
 import game.skill.BalanceSkill;
 import game.skill.BaseSkill;
+import game.skill.CanYingSkill;
 import game.skill.FoShanWuYingJiaoSkill;
 import game.skill.HandGoodSkill;
 import game.skill.HpSkill;
@@ -10,6 +11,7 @@ import game.skill.LongJuanFengSkill;
 import game.skill.LossLoveSkill;
 import game.skill.MinJieSkill;
 import game.skill.PowerSkill;
+import game.skill.QiENaoYangSkill;
 import game.skill.RehitSkill;
 import game.skill.SpeedSkill;
 import game.skill.WeaponGoodSkill;
@@ -35,7 +37,11 @@ public class SkillFactory {
 		
 		case BaseSkill.ZhuangSi_Skill: return new ZhuangSiSkill(lv);	//装死
 		
+		case BaseSkill.CanYing_Skill: return new CanYingSkill(lv);	//残影
+		
+		
 		case BaseSkill.FoShanWuYingJiao_Skill: return new FoShanWuYingJiaoSkill(lv);	//佛山无影脚
+		case BaseSkill.QiENaoYang_Skill : return new QiENaoYangSkill(lv);	//企鹅挠痒
 		default: return null;
 		}
 	}

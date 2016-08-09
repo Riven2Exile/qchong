@@ -14,18 +14,18 @@ public class SpeedSkill extends BaseSkill{
 		super(lv);
 	}
 
-	public void calcAttr(Player player) {
+	public void takeEffect(Player attacker, Player defender) {
 		int nAddSpeed = 0;
 		switch (getSkillLv()) {
 		case 0:
-			nAddSpeed = (int)Math.floor( player.getAttr().get_total_base_speed() * 0.5 + 3);
+			nAddSpeed = (int)Math.floor( attacker.getAttr().get_total_base_speed() * 0.5 + 3);
 			break;
 
 		default:
 			break;
 		}
 		
-		player.getAttr().add_addi_speed_skill(nAddSpeed); //增加技能速度加成
+		attacker.getAttr().add_addi_speed_skill(nAddSpeed); //增加技能速度加成
 	}
 
 	@Override

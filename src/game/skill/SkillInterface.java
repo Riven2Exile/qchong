@@ -34,7 +34,7 @@ public interface SkillInterface {
 	public final static int FoShanWuYingJiao_Skill	= 26;	//佛山无影脚
 	public final static int ShiRuBaoYu_Skill	= 27;	//势如暴雨
 	public final static int QiEHou_Skill		= 28;	//企鹅吼
-	public final static int QiERaoYang_Skill	= 29;	//企鹅挠痒
+	public final static int QiENaoYang_Skill	= 29;	//企鹅挠痒
 	public final static int ShiFuJiaDao_Skill	= 30;	//师傅驾到
 	public final static int RuLaiShenZhang_Skill= 31;	//如来神掌
 	public final static int ShiXue_Skill		= 32;	//嗜血
@@ -71,7 +71,7 @@ public interface SkillInterface {
 	int SKILLTYPE_DYING_TRIGGER = 5;	//濒死触发性(如装死)
 	
 	// 计算属性 , 是否可以增加 buff增益(如命中等)
-	abstract void calcAttr(Player player);
+	abstract void takeEffect(Player attacker, Player defender);
 	
 	// 造成伤害
 	abstract int getDamage(Player attacker, Player defender);

@@ -19,4 +19,11 @@ public interface BuffInterface {
 	 * buff清除之后
 	 */
 	void onClearBuff();
+	
+	
+	/******
+	 *  buff 枚举
+	 */
+	int Buff_Undefine 	= -1;	//未定义
+	int Buff_QErNaoYang	= 0;	//企鹅挠痒
 }

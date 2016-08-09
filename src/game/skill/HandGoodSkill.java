@@ -27,9 +27,9 @@ public class HandGoodSkill extends BaseSkill {
 		return BaseSkill.SKILLTYPE_FOREVER;
 	}
 
-	public void calcAttr(Player player){
+	public void takeEffect(Player attacker, Player defender){
 		int lv = getSkillLv();
-		Attr attr = player.getAttr();
+		Attr attr = attacker.getAttr();
 		if (0 == lv){
 			attr.add_addEmptyHandDamagePer(20); //空手伤害增加了20%
 		}

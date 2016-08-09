@@ -26,7 +26,7 @@ public class ZhuangSiSkill extends BaseSkill {
 		return BaseSkill.SKILLTYPE_DYING_TRIGGER;
 	}
 
-	public void calcAttr(Player self){
+	public void takeEffect(Player self, Player defender){
 		switch (getSkillLv())
 		{
 		case 0:{

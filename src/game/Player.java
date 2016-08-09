@@ -1,5 +1,6 @@
 package game;
 
+import buff.FightBuffHelper;
 import game.define.SexType;
 
 public class Player {
@@ -15,6 +16,9 @@ public class Player {
 	
 	// ÎäÆ÷
 	WeaponHelper _weapon = new WeaponHelper();
+	
+	// Õ½¶·buff
+	FightBuffHelper _fFightBuffHelper = new FightBuffHelper(this);
 	
 	
 	
@@ -46,12 +50,24 @@ public class Player {
 		return _attr;
 	}
 	
+	/**
+	 * Íæ¼ÒÊÇ·ñËÀÍö
+	 * @return
+	 */
+	public boolean isDie(){
+		return _attr.get_final_hp() <= 0;
+	}
+	
 	public SkillHelper GetSkillHelper() {
 		return _skill;
 	}
 	
 	public WeaponHelper GetWeaponHelper(){
 		return _weapon;
+	}
+	
+	public FightBuffHelper GetFightBuffHelper(){
+		return _fFightBuffHelper;
 	}
 	
 	
