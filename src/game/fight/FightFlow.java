@@ -4,13 +4,9 @@ import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 import game.Attr;
 import game.BaseWeight;
-import game.BaseWeightContent;
-import game.ForeachInterface;
 import game.Player;
 import game.SkillHelper;
 import game.WeaponHelper;
@@ -62,22 +58,20 @@ public class FightFlow {
 		attackerCon._nFightWay = FightWayInterface.AW_ActiveMainSkill;
 		p1.GetSkillHelper().ForEach(attackerCon);	//主动技能权重流
 		
+		FightCon moodCon = new FightCon();
+		moodCon._nFightWay = FightWayInterface.AW_Weapon;
+		p2.GetWeaponHelper().ForEach(attackerCon);
+		moodCon._nFightWay = FightWayInterface.AW_ActiveMainSkill;
+		p2.GetSkillHelper().ForEach(moodCon);
+		
 		// todo: “攻击权重随机之前触发型”
 		
 		// todo: 主要的攻击手段
 		
 		int nHuihe = 20;
 		for (int i = 1; i <= nHuihe; ++i){
-			
 			// 确定到某人的流程,
-			p1.GetFightBuffHelper().onARoundStart();
-			if (p1.isDie()) {
-				out.println(p1.GetPlayerName() + "死亡了！");
-				break;
-			}
-			
-			// 先不考虑速度的概念, 每人各打一次
-			attackOnce(p1, p2, attackerCon, i);	// 【攻击一次】
+			execARound(p1, p2, attackerCon, i);
 			
 			if(p1.getAttr().get_final_hp() <= 0){
 				out.println(p1.GetPlayerName() + "死亡了!"); 
@@ -88,12 +82,7 @@ public class FightFlow {
 				break;
 			}
 			
-			p2.GetFightBuffHelper().onARoundStart();
-			if(p2.isDie()){
-				out.println(p2.GetPlayerName()+"死亡了！");
-				break;
-			}
-			attackOnce(p2, p1, attackerCon, i);
+			execARound(p2, p1, moodCon, i);
 			if(p1.getAttr().get_final_hp() <= 0){
 				out.println(p1.GetPlayerName() + "死亡了!"); 
 				break;
@@ -102,6 +91,9 @@ public class FightFlow {
 				out.println(p2.GetPlayerName() + "死亡了!"); 
 				break;
 			}
+			
+			
+			//
 		}
 		
 		// 先随机出此次是 空手攻击，还是武器，还是技能，然后再分别随机各自的子类.... (但是首先，需要取身上可以随机的东西去随机，如果没有武器，怎么随机武器)
@@ -129,21 +121,21 @@ public class FightFlow {
 			BaseWeapon weapon = atk.GetWeaponHelper().getWeapon(id);
 			if(weapon != null){
 				nWeaponType = weapon.getWeaponType();
-				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon);
+				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon);	//获得人拿着武器的基础伤害
 			}
 		}
 		else if(FightWayInterface.AW_EmptyHand == nFightWay){
-			nSelfDamage = TestDamage.genEmptyHandDamage(atk.getAttr());
+			nSelfDamage = TestDamage.genEmptyHandDamage(atk.getAttr());	//获得人的基础伤害
 		}
 		else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
 			BaseSkill skill = atk.GetSkillHelper().getSkill(id);
 			if(skill != null){
-				nSelfDamage = skill.getDamage(atk, def); //计算伤害
-				skill.takeEffect(atk, def); //触发效果
+				nSelfDamage = skill.getDamage(atk, def); 	//计算技能基本伤害
+				skill.takeEffect(atk, def); 				//触发技能效果
 			}
 		}
 		
-		
+		///////////// 计算增伤 以及伤害减免 (可以抽取函数)
 		// ---->>>>>>>  数值型增伤
 		int nAddDamageChangeNum = calcAddDamageNumber(atk.getAttr(), nFightWay, nWeaponType);
 		if(nAddDamageChangeNum > 0){
@@ -198,6 +190,28 @@ public class FightFlow {
 		if (FightWayInterface.AW_Weapon == nFightWay){
 			attackerCon.remove(nFightWay, id);
 		}
+		else if (FightWayInterface.AW_ActiveMainSkill == nFightWay) {
+			///// 有些技能一场战斗是有使用次数限制的
+			if (id == BaseSkill.QiENaoYang_Skill) {
+				attackerCon.remove(nFightWay, id);
+			}
+		}
+	}
+	
+	
+	/**
+	 *  单方面一个回合
+	 */
+	public void execARound(Player attacker, Player defender, FightCon attackerCon, int i){
+		attacker.GetFightBuffHelper().onARoundStart();
+		if (attacker.isDie()) {
+			out.println(attacker.GetPlayerName() + "死亡了！");
+			return ;
+		}
+		
+		// 先不考虑速度的概念, 每人各打一次
+		attackOnce(attacker, defender, attackerCon, i);	// 【攻击一次】
+		attacker.GetFightBuffHelper().onARoundEnd();
 	}
 	
 	/**
@@ -363,93 +377,6 @@ class FightWight extends BaseWeight{
 	
 	public int getID(){
 		return _id;
-	}
-}
-
-/**
- *  战斗容器
- * @author liupr
- *
- */
-class FightCon implements ForeachInterface{
-	private HashMap<Integer, FightWight> _mapWeapon	= new HashMap<>();			//武器列表
-	private HashMap<Integer, FightWight> _mapActiveSkill = new HashMap<>();	//主动技能
-	
-	public int _nFightWay = 0;	//当前准备随机的攻击方式  FightWayInterface
-	
-	public void clearAll(){
-		
-	}
-	
-	public void addWeapon(FightWight w){
-		_mapWeapon.put(w.getID(), w);
-	}
-	
-	public void addActiveSkill(FightWight w){
-		_mapActiveSkill.put(w.getID(), w);
-	}
-	
-	
-	public int getRandomFightWay(){
-		//构造权重
-		BaseWeightContent w = new BaseWeightContent();
-		w.putAData(new BaseWeight(0));	//AW_Undefine
-		w.putAData(new BaseWeight(1)); // AW_EmptyHand 空手;
-		w.putAData(new BaseWeight(_mapWeapon.size())); //AW_Weapon 武器
-		w.putAData(new BaseWeight(_mapActiveSkill.size())); //主动技能
-		return w.getWeightIndex();
-	}
-	
-	public int getRandomID(int fightway){
-		BaseWeightContent w = new BaseWeightContent();
-		if (FightWayInterface.AW_Weapon == fightway ){
-			for ( Entry<Integer, FightWight>va : _mapWeapon.entrySet()){
-				w.putAData(va.getValue());
-			}
-			
-			FightWight fw = (FightWight)w.getWeightData();
-			if (fw != null){
-				return fw.getID();
-			}
-		}
-		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
-			for (Entry<Integer, FightWight> va : _mapActiveSkill.entrySet()){
-				w.putAData(va.getValue());
-			}
-			
-			FightWight fw = (FightWight)w.getWeightData();
-			if (fw != null){
-				return fw.getID();
-			}
-		}
-		
-		
-		return 0;
-	}
-	
-	public void remove(int fightway, int id){
-		if(FightWayInterface.AW_Weapon == fightway){
-			_mapWeapon.remove(id);
-		}
-		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
-			_mapActiveSkill.remove(id);
-		}
-	}
-
-	@Override
-	public <T> void doFun(T obj) {
-		// TODO Auto-generated method stub
-		if( FightWayInterface.AW_Weapon == _nFightWay ){
-			BaseWeapon w = (BaseWeapon)obj;
-			addWeapon(new FightWight(1, w.getWeaponKind()));
-		}
-		else if(FightWayInterface.AW_ActiveMainSkill == _nFightWay){
-			BaseSkill sk = (BaseSkill)obj;
-			if(sk.getSkillType() == BaseSkill.SKILLTYPE_ACTIVE_MAIN){
-				addActiveSkill(new FightWight(1, sk.getSkillID()) );
-			}
-			
-		}
 	}
 }
 

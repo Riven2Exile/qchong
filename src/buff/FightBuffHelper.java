@@ -42,7 +42,21 @@ public class FightBuffHelper {
 	 */
 	public void buffSubARound(){
 		for (Entry<Integer, BaseFightBuff> entry : mData.entrySet()){
-			if (entry.getValue().get_leftRound() <= 1) {
+			if (entry.getValue().get_leftRound() <= 1 && entry.getValue().getBuffType() == BaseFightBuff.BuffType_good) {
+				removeBuff(entry.getKey());
+			}
+			else{
+				entry.getValue().addLeftRound(-1);
+			}
+		}
+	}
+	
+	/**
+	 *  玩家身上的dot各减少一回合
+	 */
+	public void dotSubARound(){
+		for (Entry<Integer, BaseFightBuff> entry : mData.entrySet()){
+			if (entry.getValue().get_leftRound() <= 1 && entry.getValue().getBuffType() == BaseFightBuff.BuffType_dot) {
 				removeBuff(entry.getKey());
 			}
 			else{
@@ -56,7 +70,22 @@ public class FightBuffHelper {
 	 */
 	public void onARoundStart(){
 		for (Entry<Integer, BaseFightBuff> entry : mData.entrySet()){
+			if(entry.getValue().getBuffType() == BaseFightBuff.BuffType_good){
+				buffSubARound();
+			}
 			entry.getValue().onARoundStart(_player);
+		}
+	}
+	
+	/**
+	 *  一个回合的结束
+	 */
+	public void onARoundEnd(){
+		for (Entry<Integer, BaseFightBuff> entry : mData.entrySet()){
+			if(entry.getValue().getBuffType() == BaseFightBuff.BuffType_dot){
+				dotSubARound();
+			}
+			entry.getValue().onARoundEnd(_player);
 		}
 	}
 }

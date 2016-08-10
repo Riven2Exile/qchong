@@ -59,5 +59,17 @@ public class BaseFightBuff implements BuffInterface{
 	public void onARoundStart(Player player){
 		
 	}
+	
+	/**
+	 *  一个dot结束的时候要触发什么?
+	 * @return
+	 */
+	public void onARoundEnd(Player player){
+		
+	}
+	
+	public int getBuffType(){
+		return BuffType_good;
+	}
 
 }

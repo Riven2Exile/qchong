@@ -8,6 +8,14 @@ public class QiENaoYangBuff extends BaseFightBuff {
 		// TODO Auto-generated constructor stub
 	}
 
+	public int getBuffID() {
+		// TODO Auto-generated method stub
+		return Buff_QErNaoYang;
+	}
+	
+	public int getBuffType(){
+		return BuffType_dot;
+	}
 	
 	public void onARoundStart(Player player){
 		// ПлбЊ

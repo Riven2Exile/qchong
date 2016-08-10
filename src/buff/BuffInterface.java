@@ -21,6 +21,12 @@ public interface BuffInterface {
 	void onClearBuff();
 	
 	
+	/*****
+	 *  buff type
+	 */
+	int BuffType_good 	= 0;	//增益buff
+	int BuffType_dot	= 1;	//减益buff
+	
 	/******
 	 *  buff 枚举
 	 */
