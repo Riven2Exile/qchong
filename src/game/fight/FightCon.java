@@ -18,6 +18,8 @@ class FightCon implements ForeachInterface{
 	private HashMap<Integer, FightWight> _mapWeapon	= new HashMap<>();			//武器列表
 	private HashMap<Integer, FightWight> _mapActiveSkill = new HashMap<>();	//主动技能
 	
+	public BaseWeapon _curWeaponInHand = null;	//当前手持的武器(不包含投掷武器，或者是投掷出去的手持武器)
+	
 	public int _nFightWay = 0;	//当前准备随机的攻击方式  FightWayInterface
 	
 	public void clearAll(){
@@ -77,6 +79,17 @@ class FightCon implements ForeachInterface{
 		else if(FightWayInterface.AW_ActiveMainSkill == fightway){
 			_mapActiveSkill.remove(id);
 		}
+	}
+	
+	/*
+	 *  移除当前武器
+	 */
+	public void removeCurrentWeapon(){
+		if (_curWeaponInHand != null) {
+			_mapWeapon.remove(_curWeaponInHand.getWeaponKind());
+			_curWeaponInHand = null;
+		}
+		
 	}
 
 	@Override

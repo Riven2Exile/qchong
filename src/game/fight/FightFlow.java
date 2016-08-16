@@ -18,6 +18,7 @@ import game.gametest.TestDamage;
 import game.skill.BaseSkill;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
+import game.weapon.WeaponInterface;
 
 /*
  *  战斗流程
@@ -121,10 +122,16 @@ public class FightFlow {
 			BaseWeapon weapon = atk.GetWeaponHelper().getWeapon(id);
 			if(weapon != null){
 				nWeaponType = weapon.getWeaponType();
+				// todo: 如果不是投掷武器 并且不是将手持武器投掷出去的,则将其记录为当前武器
+				if (nWeaponType != WeaponType.WEAPON_THROW) {
+					attackerCon._curWeaponInHand = weapon;
+				}
+				
 				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon);	//获得人拿着武器的基础伤害
 			}
 		}
 		else if(FightWayInterface.AW_EmptyHand == nFightWay){
+			attackerCon.removeCurrentWeapon();// 先丢掉当前的武器
 			nSelfDamage = TestDamage.genEmptyHandDamage(atk.getAttr());	//获得人的基础伤害
 		}
 		else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
@@ -136,36 +143,9 @@ public class FightFlow {
 		}
 		
 		///////////// 计算增伤 以及伤害减免 (可以抽取函数)
-		// ---->>>>>>>  数值型增伤
-		int nAddDamageChangeNum = calcAddDamageNumber(atk.getAttr(), nFightWay, nWeaponType);
-		if(nAddDamageChangeNum > 0){
-			nSelfDamage += nAddDamageChangeNum;
-		}
-		// ---->>>>>>>  百分比增伤
-		int nAddDamageChangePer = calcAddDamagePer(atk.getAttr(), nFightWay, nWeaponType);
-		if(nAddDamageChangePer > 0){
-			nSelfDamage = (int)Math.floor( nSelfDamage * ((100 + nAddDamageChangePer) / (double)100) );
-		}
-		
-		// ---->>>>>>>  数值型减伤
-		int nSubDamageChangeNum = calcSubDamageNumber(def.getAttr(), nFightWay, nWeaponType);
-		if(nSubDamageChangeNum > 0){
-			nSelfDamage -= nSubDamageChangeNum;
-			if(nSelfDamage < 0){
-				nSelfDamage = 0;
-			}
-		}
-		// ---->>>>>>>  百分比减伤
-		int nSubDamageChangePer = calcSubDamagePer(def.getAttr(), nFightWay, nWeaponType); //减伤应该最多只能减 100%吧
-		if(nSelfDamage > 0 && nSubDamageChangePer > 0){
-			nSelfDamage = nSelfDamage - (int)Math.floor(nSelfDamage * ((100 - nSubDamageChangePer)/(double)100) ); //
-			if(nSelfDamage < 0){
-				nSelfDamage = 0;
-			}
-		}
+		nSelfDamage = execAddAndSubDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
 		
 		// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次  attackOnce方法
-		
 		
 		// 血量变化
 		def.getAttr().add_final_hp(-nSelfDamage);
@@ -212,6 +192,41 @@ public class FightFlow {
 		// 先不考虑速度的概念, 每人各打一次
 		attackOnce(attacker, defender, attackerCon, i);	// 【攻击一次】
 		attacker.GetFightBuffHelper().onARoundEnd();
+	}
+	
+	/**
+	 *  执行增伤和减伤
+	 */
+	public int execAddAndSubDamage(Attr atk, Attr def, int nSelfDamage, int nFightWay, int nWeaponType){
+		// ---->>>>>>>  数值型增伤
+		int nAddDamageChangeNum = calcAddDamageNumber(atk, nFightWay, nWeaponType);
+		if (nAddDamageChangeNum > 0) {
+			nSelfDamage += nAddDamageChangeNum;
+		}
+		// ---->>>>>>> 百分比增伤
+		int nAddDamageChangePer = calcAddDamagePer(atk, nFightWay, nWeaponType);
+		if (nAddDamageChangePer > 0) {
+			nSelfDamage = (int) Math.floor(nSelfDamage * ((100 + nAddDamageChangePer) / (double) 100));
+		}
+
+		// ---->>>>>>> 数值型减伤
+		int nSubDamageChangeNum = calcSubDamageNumber(def, nFightWay, nWeaponType);
+		if (nSubDamageChangeNum > 0) {
+			nSelfDamage -= nSubDamageChangeNum;
+			if (nSelfDamage < 0) {
+				nSelfDamage = 0;
+			}
+		}
+		// ---->>>>>>> 百分比减伤
+		int nSubDamageChangePer = calcSubDamagePer(def, nFightWay, nWeaponType); // 减伤应该最多只能减
+																							// 100%吧
+		if (nSelfDamage > 0 && nSubDamageChangePer > 0) {
+			nSelfDamage = nSelfDamage - (int) Math.floor(nSelfDamage * ((100 - nSubDamageChangePer) / (double) 100)); //
+			if (nSelfDamage < 0) {
+				nSelfDamage = 0;
+			}
+		}
+		return nSelfDamage;
 	}
 	
 	/**
