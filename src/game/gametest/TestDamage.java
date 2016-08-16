@@ -52,7 +52,7 @@ public class TestDamage {
 				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
 						new Pair(WeaponKind.CHONG_QI_CHUI_ZI, 0)});
 		
-		// 环扣刀(2,17) (力量3，伤19),(4,19/20),(5,20/21),(6,21/22/23/24),(12,27) (16,34)
+		// 环扣刀(2,17) (力量3，伤19),(4,19/20),(5,20/21),(6,21/22/23/24),(7,23),(10,29),(12,27) (16,34)
 		//q宠3 7级【测试数据】: 开山斧(19,25)  短剑(12,17)  接力棒(20,23)  充气锤子(27,43)  空手(7,9)
 		test.addData("宠3_7级", 4, 6, 7, null, 
 				new Pair[]{new Pair(WeaponKind.KAI_SHAN_FU, 0),new Pair(WeaponKind.JIE_LI_BANG, 0),new Pair(WeaponKind.DUAN_JIAN, 0),
