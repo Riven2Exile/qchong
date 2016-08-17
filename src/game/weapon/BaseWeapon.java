@@ -22,6 +22,10 @@ public abstract class BaseWeapon implements WeaponInterface{
 	//获得武器种类, 说白了是武器的id
 	public abstract int getWeaponKind(); //{	return WeaponKind.UNDEFINE; }
 	
+	public int getWeaponLv(){
+		return _enhanceLv;
+	}
+	
 	public final int getMinDamage(){
 		return _nMinDamage;
 	}

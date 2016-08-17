@@ -1,7 +1,7 @@
 package game.weapon;
 
-/*
- *  短剑
+/**
+ *  武器： 短剑    （增加连击率）
  */
 
 import game.Player;
@@ -17,7 +17,10 @@ public class DuanJianWeapon extends BaseWeapon {
 	@Override
 	public void HandleEffect(Player attacker, Player defender) {
 		// TODO Auto-generated method stub
-
+		int lv = getWeaponLv();
+		if (0 == lv) {
+			attacker.getAttr().add_doubleHit(25);	// 25%连续攻击
+		}
 	}
 
 	@Override

@@ -45,6 +45,8 @@ public class Attr
 	////// 暴击   / 抗暴
 	////// 命中   / 闪避
 	
+	int _doubleHit = 0;	//连击率
+	
 	int _addSkillDamage = 0;	//技能伤害值
 	int _subSkillDamage	= 0;	//抗技能伤害值
 	int _addSkillDamagePer	= 0;	//技能增伤百分比
@@ -585,6 +587,17 @@ public class Attr
 	public void add_subEmptyHandDamagePer(int n){
 		this._subEmptyHandDamagePer += n;
 	}
+
+	public int get_doubleHit() {
+		return _doubleHit;
+	}
+	public void set_doubleHit(int _doubleHit) {
+		this._doubleHit = _doubleHit;
+	}
+	public void add_doubleHit(int value){
+		this._doubleHit += value;
+	}
+	
 
 	public void tell(){
 		System.out.println("最终三围:" + this.get_final_power() + "," + this.get_final_minjie() + "," + this.get_final_speed());

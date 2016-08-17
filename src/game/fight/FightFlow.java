@@ -107,11 +107,7 @@ public class FightFlow {
 	/**
 	 * 攻击一次
 	 */
-	public void attackOnce(Player atk, Player def, FightCon attackerCon, int i){
-		int nFightWay = 0 ;
-		int id = 0 ; 
-		nFightWay = attackerCon.getRandomFightWay();
-		id = attackerCon.getRandomID(nFightWay);
+	public void attackOnce(Player atk, Player def, FightCon attackerCon, int i, int nFightWay, int id){
 		String strOut;
 		////// todo: 命中计算
 		
@@ -166,16 +162,6 @@ public class FightFlow {
 		+ nSelfDamage + "点主观伤害, [" + def.GetPlayerName() + "]剩余血量" + def.getAttr().get_final_hp() + "/" + def.getAttr().get_max_hp();
 		out.println(strOut);
 		
-		// 自身的消耗计算, 武器减1，技能使用次数+1
-		if (FightWayInterface.AW_Weapon == nFightWay){
-			attackerCon.remove(nFightWay, id);
-		}
-		else if (FightWayInterface.AW_ActiveMainSkill == nFightWay) {
-			///// 有些技能一场战斗是有使用次数限制的
-			if (id == BaseSkill.QiENaoYang_Skill) {
-				attackerCon.remove(nFightWay, id);
-			}
-		}
 	}
 	
 	
@@ -189,8 +175,26 @@ public class FightFlow {
 			return ;
 		}
 		
-		// 先不考虑速度的概念, 每人各打一次
-		attackOnce(attacker, defender, attackerCon, i);	// 【攻击一次】
+		/* 随机出招 */
+		int nFightWay = 0 ;
+		int id = 0 ;
+		nFightWay = attackerCon.getRandomFightWay();
+		id = attackerCon.getRandomID(nFightWay);
+		
+		/* 计算武器或者技能的效果 */
+		
+		attackOnce(attacker, defender, attackerCon, i, nFightWay, id);	// 【攻击一次】
+		
+		// 自身的消耗计算, 武器减1，技能使用次数+1
+		if (FightWayInterface.AW_Weapon == nFightWay) {
+			attackerCon.remove(nFightWay, id);
+		} else if (FightWayInterface.AW_ActiveMainSkill == nFightWay) {
+			///// 有些技能一场战斗是有使用次数限制的
+			if (id == BaseSkill.QiENaoYang_Skill) {
+				attackerCon.remove(nFightWay, id);
+			}
+		}
+		
 		attacker.GetFightBuffHelper().onARoundEnd();
 	}
 	

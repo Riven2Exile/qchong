@@ -22,6 +22,13 @@ class FightCon implements ForeachInterface{
 	
 	public int _nFightWay = 0;	//当前准备随机的攻击方式  FightWayInterface
 	
+	////// 需要存储战斗状态(buff, dot)
+	// 1.眩晕   2.不能使用远程技能  3.
+	public int _nXuanYun = 0; 		//眩晕
+	public int _nCanFarSkill = 0;	//不能使用远程技能
+	public int _nDoubleAttack = 0;	//连击率! ， 每一回合之前都会计算的
+	
+	
 	public void clearAll(){
 		
 	}
