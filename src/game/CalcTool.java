@@ -95,8 +95,8 @@ public class CalcTool {
 		System.out.println(strOut);
 		
 		// 3. 测试 probabilityInt 概率
-		int[] nArrayPro = {0, 3, 67, 100};
-		strOut = "共执行了"+dCount+"次,\n";
+		int[] nArrayPro = {100, 3, 67, 0};
+		strOut = "probabilityInt 共执行了"+dCount+"次,\n";
 		for ( int iPro : nArrayPro ){
 			int iCount = 0;  //命中次数
 			for ( int i = 0; i < dCount; ++i ){
@@ -105,7 +105,7 @@ public class CalcTool {
 				}
 			}		
 			
-			strOut = strOut + "设定概率为:" + iPro + "%," + "结果实验执行概率为:" + iCount/(float)dCount * 100 + "%\n";
+			strOut = strOut + "设定概率为:" + iPro + "%," + "结果实验执行命中次数：" + iCount + ", 概率为:" + iCount/(float)dCount * 100 + "%\n";
 			System.out.println(strOut);
 		}
 		

@@ -7,6 +7,7 @@ import game.skill.CanYingSkill;
 import game.skill.FoShanWuYingJiaoSkill;
 import game.skill.HandGoodSkill;
 import game.skill.HpSkill;
+import game.skill.LingBoWeiBuSkill;
 import game.skill.LongJuanFengSkill;
 import game.skill.LossLoveSkill;
 import game.skill.MinJieSkill;
@@ -31,6 +32,7 @@ public class SkillFactory {
 		case BaseSkill.LOSS_LOVE_SKILL: return new LossLoveSkill(lv);	//晴天霹雳
 		case BaseSkill.ATTACK_DOUBLE_SKILL: return new AttackDoubleSkill(lv);	//仙风云体
 		
+		case BaseSkill.LingBoWeiBu_Skill: return new LingBoWeiBuSkill(lv);	//凌波微步
 		
 		
 		case BaseSkill.LongJuanFeng_Skill : return new LongJuanFengSkill(lv);	//龙卷风

@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import game.Attr;
 import game.BaseWeight;
+import game.CalcTool;
 import game.Player;
 import game.SkillHelper;
 import game.WeaponHelper;
@@ -83,15 +84,15 @@ public class FightFlow {
 				break;
 			}
 			
-			execARound(p2, p1, moodCon, i);
-			if(p1.getAttr().get_final_hp() <= 0){
-				out.println(p1.GetPlayerName() + "死亡了!"); 
-				break;
-			}
-			if(p2.getAttr().get_final_hp() <= 0){
-				out.println(p2.GetPlayerName() + "死亡了!"); 
-				break;
-			}
+//			execARound(p2, p1, moodCon, i);
+//			if(p1.getAttr().get_final_hp() <= 0){
+//				out.println(p1.GetPlayerName() + "死亡了!"); 
+//				break;
+//			}
+//			if(p2.getAttr().get_final_hp() <= 0){
+//				out.println(p2.GetPlayerName() + "死亡了!"); 
+//				break;
+//			}
 			
 			
 			//
@@ -107,61 +108,76 @@ public class FightFlow {
 	/**
 	 * 攻击一次
 	 */
-	public void attackOnce(Player atk, Player def, FightCon attackerCon, int i, int nFightWay, int id){
+	public void attackOnce(Player atk, Player def, FightCon attackerCon, int i, int nFightWay, int id, BaseWeapon weapon, BaseSkill skill, 
+			boolean bDoubleHit){
 		String strOut;
-		////// todo: 命中计算
+		////// todo: 命中计算 [可以抽取]
+		int hit_rate = atk.getAttr().get_final_hit();
+		int dodge_rate = def.getAttr().get_final_dodge();
+		boolean bHit = true; //是否命中, 【这里需要考虑“必中”效果带来的修正】
+		if (dodge_rate > hit_rate){
+			bHit = !CalcTool.probabilityInt(dodge_rate - hit_rate);
+		}
+		
+		
 		
 		////// 伤害计算
 		int nSelfDamage = 0;
-		int nWeaponType = WeaponType.WEAPON_UNDEFINE; //武器类型
-		if (FightWayInterface.AW_Weapon == nFightWay){
-			BaseWeapon weapon = atk.GetWeaponHelper().getWeapon(id);
-			if(weapon != null){
-				nWeaponType = weapon.getWeaponType();
-				// todo: 如果不是投掷武器 并且不是将手持武器投掷出去的,则将其记录为当前武器
-				if (nWeaponType != WeaponType.WEAPON_THROW) {
-					attackerCon._curWeaponInHand = weapon;
+		
+		if (bHit) {
+
+			int nWeaponType = WeaponType.WEAPON_UNDEFINE; // 武器类型
+			if (FightWayInterface.AW_Weapon == nFightWay) {
+				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon); // 获得人拿着武器的基础伤害
+			} else if (FightWayInterface.AW_EmptyHand == nFightWay) {
+				nSelfDamage = TestDamage.genEmptyHandDamage(atk.getAttr()); // 获得人的基础伤害
+			} else if (FightWayInterface.AW_ActiveMainSkill == nFightWay) {
+				if (skill != null) {
+					nSelfDamage = skill.getDamage(atk, def); // 计算技能基本伤害
 				}
-				
-				nSelfDamage = TestDamage.genWeaponDamage(atk, weapon);	//获得人拿着武器的基础伤害
 			}
-		}
-		else if(FightWayInterface.AW_EmptyHand == nFightWay){
-			attackerCon.removeCurrentWeapon();// 先丢掉当前的武器
-			nSelfDamage = TestDamage.genEmptyHandDamage(atk.getAttr());	//获得人的基础伤害
-		}
-		else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
-			BaseSkill skill = atk.GetSkillHelper().getSkill(id);
-			if(skill != null){
-				nSelfDamage = skill.getDamage(atk, def); 	//计算技能基本伤害
-				skill.takeEffect(atk, def); 				//触发技能效果
+
+			///////////// 计算增伤 以及伤害减免 (可以抽取函数)
+			nSelfDamage = execAddAndSubDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
+
+			// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次 attackOnce方法
+
+			// 血量变化
+			def.getAttr().add_final_hp(-nSelfDamage);
+
+			// todo: 判断死亡, 触发临死技能, 有顺序的，一般是是装死技能
+			if (def.getAttr().get_final_hp() <= 0) {
+				// todo
+				BaseSkill sk = def.GetSkillHelper().getSkill(SkillInterface.ZhuangSi_Skill);
+				if (sk != null && sk.getUseCount() < 1) {
+					sk.takeEffect(def, null);
+					sk.addUseCount(1);
+					bDoubleHit = false; // [取消本次连击]
+					out.println(def.GetPlayerName() + "触发了装死技能!");// print
+				}
 			}
-		}
-		
-		///////////// 计算增伤 以及伤害减免 (可以抽取函数)
-		nSelfDamage = execAddAndSubDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
-		
-		// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次  attackOnce方法
-		
-		// 血量变化
-		def.getAttr().add_final_hp(-nSelfDamage);
-		
-		// todo: 判断死亡, 触发临死技能, 有顺序的，一般是是装死技能
-		if( def.getAttr().get_final_hp() <= 0){
-			// todo
-			BaseSkill sk = def.GetSkillHelper().getSkill(SkillInterface.ZhuangSi_Skill);
-			if (sk != null && sk.getUseCount() < 1){
-				sk.takeEffect(def, null);
-				sk.addUseCount(1);
-				out.println(def.GetPlayerName() + "触发了装死技能!");//print
-			}
+
 		}
 		
 		///// 伤害计算 end
-		strOut = "第" + i + "回合, [" + atk.GetPlayerName() + "]使用出" + fightWay2String(nFightWay) + " " + id + ", 造成" 
-		+ nSelfDamage + "点主观伤害, [" + def.GetPlayerName() + "]剩余血量" + def.getAttr().get_final_hp() + "/" + def.getAttr().get_max_hp();
+		if(bHit)
+		{
+			strOut = "第" + i + "回合, [" + atk.GetPlayerName() + "]使用出" + fightWay2String(nFightWay) + " " + id + ", 造成"
+					+ nSelfDamage + "点主观伤害, [" + def.GetPlayerName() + "]剩余血量" + def.getAttr().get_final_hp() + "/"
+					+ def.getAttr().get_max_hp();
+		}
+		else{
+			strOut = "第" + i + "回合, [" + atk.GetPlayerName() + "]使用出" + fightWay2String(nFightWay) + " " + id + ", "
+					+ def.GetPlayerName() + "【闪避】了！！";
+		}
 		out.println(strOut);
 		
+		
+		
+		if (bDoubleHit) { ///// 执行攻击者连击
+			out.println(atk.GetPlayerName() + "触发连击!");
+			attackOnce(atk, def, attackerCon, i, nFightWay, id, weapon, skill, false);
+		}
 	}
 	
 	
@@ -182,8 +198,32 @@ public class FightFlow {
 		id = attackerCon.getRandomID(nFightWay);
 		
 		/* 计算武器或者技能的效果 */
+		BaseWeapon weapon = null;
+		BaseSkill skill = null;
+		if (FightWayInterface.AW_Weapon == nFightWay){
+			weapon = attacker.GetWeaponHelper().getWeapon(id);
+			if(weapon != null){
+				// todo: 如果不是投掷武器 并且不是将手持武器投掷出去的,则将其记录为当前武器
+				if (weapon.getWeaponType() != WeaponType.WEAPON_THROW) {
+					attackerCon._curWeaponInHand = weapon;
+				}
+				
+				weapon.HandleEffect(attacker, defender); //触发武器效果
+			}
+		}
+		else if(FightWayInterface.AW_EmptyHand == nFightWay){
+			attackerCon.removeCurrentWeapon();// 先丢掉当前的武器
+		}
+		else if(FightWayInterface.AW_ActiveMainSkill == nFightWay){
+			skill = attacker.GetSkillHelper().getSkill(id);
+			if(skill != null){
+				skill.takeEffect(attacker, defender); 				//触发技能效果
+			}
+		}
 		
-		attackOnce(attacker, defender, attackerCon, i, nFightWay, id);	// 【攻击一次】
+		boolean bDoubleHit = CalcTool.probabilityInt(attacker.getAttr().get_doubleHit());// 是否连击
+		
+		attackOnce(attacker, defender, attackerCon, i, nFightWay, id, weapon, skill, bDoubleHit);	// 【攻击一次】
 		
 		// 自身的消耗计算, 武器减1，技能使用次数+1
 		if (FightWayInterface.AW_Weapon == nFightWay) {
@@ -196,6 +236,7 @@ public class FightFlow {
 		}
 		
 		attacker.GetFightBuffHelper().onARoundEnd();
+		attacker.getAttr().set_doubleHit(0);//连击率清零
 	}
 	
 	/**
@@ -353,10 +394,17 @@ public class FightFlow {
 		wood.getAttr().set_base_hp(500);
 		wood.getAttr().CalcFinalThree();
 		wood.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.ZhuangSi_Skill, 0));	//装死
+		wood.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.LingBoWeiBu_Skill, 0)); //凌波微步
+		
+		wood.GetSkillHelper().reCaclForeverAttr(wood);
+		wood.getAttr().CalcAddictionThree();
+		wood.getAttr().CalcFinalThree();
+		
 		
 		WeaponHelper wh =  p1.GetWeaponHelper();
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0)); //加蛇影弓
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.KUANG_MO_LIAN, 0)); //加狂魔镰
+		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.DUAN_JIAN, 0));	//短剑
 		
 		SkillHelper sh = p1.GetSkillHelper();
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
@@ -368,7 +416,7 @@ public class FightFlow {
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
 		
 		/// 下面的计算语句可以抽取成函数
-		p1.GetSkillHelper().reCaclForeverAttr(p1);
+		p1.GetSkillHelper().reCaclForeverAttr(p1); //计算 永久型技能对属性的加成
 		p1.getAttr().CalcAddictionThree();
 		p1.getAttr().CalcFinalThree();
 		
