@@ -38,4 +38,10 @@ public class LossLoveSkill extends BaseSkill {
 		}
 		return 0;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "ÇçÌìÅùö¨";
+	}
 }

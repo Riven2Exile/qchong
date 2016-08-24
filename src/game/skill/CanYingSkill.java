@@ -22,4 +22,10 @@ public class CanYingSkill extends BaseSkill {
 		return SKILLTYPE_ACTIVE_TRIGGER; //... 这种类型 
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "残影";
+	}
+
 }

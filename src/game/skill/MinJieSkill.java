@@ -39,4 +39,10 @@ public class MinJieSkill extends BaseSkill {
 		// TODO Auto-generated method stub
 		return SKILLTYPE_FOREVER;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "…Ì ÷√ÙΩ›";
+	}
 }

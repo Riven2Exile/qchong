@@ -3,6 +3,12 @@ package game.skill;
 import game.Attr;
 import game.Player;
 
+/**
+ *  武器好手
+ * @author lpr
+ *
+ */
+
 public class WeaponGoodSkill extends BaseSkill {
 
 	public WeaponGoodSkill(int lv) {
@@ -32,5 +38,11 @@ public class WeaponGoodSkill extends BaseSkill {
 			attr.add_addTinyWeaponDamagePer(20);
 			attr.add_addThrowWeaponDamagePer(20);
 		}
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "武器好手";
 	}
 }

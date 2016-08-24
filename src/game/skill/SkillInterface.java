@@ -16,7 +16,7 @@ public interface SkillInterface {
 	public final static int REHIT_SKILL		= 8;	//第六感
 	public final static int LOSS_LOVE_SKILL	= 9;	//晴天霹雳
 	public final static int ATTACK_DOUBLE_SKILL	= 10;	//无影手
-	public final static int BaoQiHuTi_SKILL	= 11;	//霸气护体
+	public final static int BaQiHuTi_SKILL	= 11;	//霸气护体
 	public final static int DaHaiWuLiang_SKILL	= 12;	//大海无量
 	public final static int PiCaoRouHou_Skill	= 13;	//皮糙肉厚
 	public final static int LingBoWeiBu_Skill	= 14;	//凌波微步
@@ -67,8 +67,10 @@ public interface SkillInterface {
 	int SKILLTYPE_FOREVER 	= 1;	//永久型    (一般为加永久属性的技能)
 	int SKILLTYPE_ACTIVE_MAIN = 2;	//主动技能 () 
 	int SKILLTYPE_ACTIVE_TRIGGER = 3; 	//主动触发型 (如攻击两次, 残影)
-	int SKILLTYPE_ATTACKED_TRIGGER = 4;	//被动触发性(如反击 )
+	int SKILLTYPE_BEAT_BACK = 4;	//被击中的反击技能(如大海无量)
 	int SKILLTYPE_DYING_TRIGGER = 5;	//濒死触发性(如装死)
+	int SKILLTYPE_BEAT_DEFEND = 6;	//被击中了的防御技能 (霸气护体)
+	int SKILLTYPE_ATTACKED_BACK = 7; //被攻击,不一定命中，的反击(第六感)， 如果有执行了 SKILLTYPE_BEAT_BACK 则不会触发
 	
 	// 计算属性 , 是否可以增加 buff增益(如命中等)
 	abstract void takeEffect(Player attacker, Player defender);

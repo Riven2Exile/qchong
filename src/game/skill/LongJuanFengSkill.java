@@ -2,6 +2,9 @@ package game.skill;
 
 import game.Player;
 
+/**
+ * Бъѕн·з
+ */
 public class LongJuanFengSkill extends BaseSkill {
 
 	public LongJuanFengSkill(int lv) {
@@ -27,5 +30,11 @@ public class LongJuanFengSkill extends BaseSkill {
 			return (int)Math.floor( 20 + attacker.getAttr().get_final_power() * 0.8 );
 		}
 		return 0;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Бъѕн·з";
 	}
 }

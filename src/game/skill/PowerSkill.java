@@ -40,4 +40,11 @@ public class PowerSkill extends BaseSkill{
 		// TODO Auto-generated method stub
 		return SKILLTYPE_FOREVER;
 	}
+
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "天生大力";
+	}
 }

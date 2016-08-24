@@ -40,4 +40,10 @@ public class SpeedSkill extends BaseSkill{
 		return SKILLTYPE_FOREVER;
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "快人一步";
+	}
+
 }

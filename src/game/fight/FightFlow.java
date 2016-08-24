@@ -84,15 +84,15 @@ public class FightFlow {
 				break;
 			}
 			
-//			execARound(p2, p1, moodCon, i);
-//			if(p1.getAttr().get_final_hp() <= 0){
-//				out.println(p1.GetPlayerName() + "死亡了!"); 
-//				break;
-//			}
-//			if(p2.getAttr().get_final_hp() <= 0){
-//				out.println(p2.GetPlayerName() + "死亡了!"); 
-//				break;
-//			}
+			execARound(p2, p1, moodCon, i);
+			if(p1.getAttr().get_final_hp() <= 0){
+				out.println(p1.GetPlayerName() + "死亡了!"); 
+				break;
+			}
+			if(p2.getAttr().get_final_hp() <= 0){
+				out.println(p2.GetPlayerName() + "死亡了!"); 
+				break;
+			}
 			
 			
 			//
@@ -141,6 +141,7 @@ public class FightFlow {
 			nSelfDamage = execAddAndSubDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
 
 			// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次 attackOnce方法
+			// todo: ---->霸气护体
 
 			// 血量变化
 			def.getAttr().add_final_hp(-nSelfDamage);
@@ -157,6 +158,7 @@ public class FightFlow {
 				}
 			}
 
+			// todo: ----> 反击, 或者大海无量
 		}
 		
 		///// 伤害计算 end
@@ -185,6 +187,9 @@ public class FightFlow {
 	 *  单方面一个回合
 	 */
 	public void execARound(Player attacker, Player defender, FightCon attackerCon, int i){
+		/*******/ ///这边需要一个属性的重新计算
+		attacker.getAttr().set_doubleHit(0); //连击率置零
+		
 		attacker.GetFightBuffHelper().onARoundStart();
 		if (attacker.isDie()) {
 			out.println(attacker.GetPlayerName() + "死亡了！");

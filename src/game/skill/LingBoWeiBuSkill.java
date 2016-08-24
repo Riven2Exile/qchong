@@ -35,4 +35,10 @@ public class LingBoWeiBuSkill extends BaseSkill {
 		}
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "¡Ë≤®Œ¢≤Ω";
+	}
+
 }

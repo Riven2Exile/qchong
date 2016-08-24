@@ -43,4 +43,10 @@ public class QiENaoYangSkill extends BaseSkill {
 			break;
 		}
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Æó¶ìÄÓÑ÷";
+	}
 }

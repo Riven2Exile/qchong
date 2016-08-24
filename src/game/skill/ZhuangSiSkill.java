@@ -35,4 +35,10 @@ public class ZhuangSiSkill extends BaseSkill {
 		}
 
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "×°ËÀ";
+	}
 }

@@ -34,4 +34,10 @@ public class HandGoodSkill extends BaseSkill {
 			attr.add_addEmptyHandDamagePer(20); //空手伤害增加了20%
 		}
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "肉搏好手";
+	}
 }

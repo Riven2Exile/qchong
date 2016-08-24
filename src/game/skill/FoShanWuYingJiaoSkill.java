@@ -40,5 +40,11 @@ public class FoShanWuYingJiaoSkill extends BaseSkill{
 		return 0;
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "·ðÉ½ÎÞÓ°½Å";
+	}
+
 	
 }

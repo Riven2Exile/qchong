@@ -32,6 +32,7 @@ public abstract class BaseSkill implements SkillInterface{
 	//public abstract void setSkillID(int id);
 	public abstract int getSkillID();
 	public abstract int getSkillType(); //技能类型
+	public abstract String getName();	//技能名称
 	
 	/**
 	 *  技能效果

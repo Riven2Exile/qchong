@@ -21,7 +21,13 @@ public class RehitSkill extends BaseSkill {
 	@Override
 	public int getSkillType() {
 		// TODO Auto-generated method stub
-		return BaseSkill.SKILLTYPE_ATTACKED_TRIGGER;
+		return BaseSkill.SKILLTYPE_BEAT_BACK;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "·´»÷";
 	}
 
 }

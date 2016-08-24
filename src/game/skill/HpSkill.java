@@ -34,4 +34,10 @@ public class HpSkill extends BaseSkill {
 			attr.add_addi_hp(  (int) Math.floor(attr.get_base_hp() * 0.15 + 8 )   );
 		}
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "hp ¼¼ÄÜ";
+	}
 }

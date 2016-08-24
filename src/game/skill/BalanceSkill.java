@@ -49,4 +49,10 @@ public class BalanceSkill extends BaseSkill {
 		// TODO Auto-generated method stub
 		return SKILLTYPE_FOREVER;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "¾ùºâ·¢Õ¹";
+	}
 }
