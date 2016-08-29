@@ -44,6 +44,9 @@ public class Attr
 	
 	////// 暴击   / 抗暴
 	////// 命中   / 闪避
+	
+	public AttrHitContain _attr_hit = new AttrHitContain(AttrHitContain.hitBase.hit_num.ordinal(), AttrHitContain.hitAddi.hit_num.ordinal()); //新版的命中属性
+	
 	int _base_hit = 0;	//固定性的， 1.永久型技能 2.星盘  3.命宫  4.
 	int _addi_hit = 0;	//1.技能的暂时加成 2.武器的临时效果 
 	int _final_hit = 0;		// 命中
