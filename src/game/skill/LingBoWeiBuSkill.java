@@ -1,6 +1,7 @@
 package game.skill;
 
 import game.Player;
+import game.attri.AttrDodgeContain;
 
 /**
  *  凌波微步
@@ -31,7 +32,8 @@ public class LingBoWeiBuSkill extends BaseSkill {
 	public void takeEffect(Player attacker, Player defender){
 		int lv = getSkillLv();
 		if (0 == lv) {
-			attacker.getAttr().add_addi_dodge(7); //7%的闪避率
+			//attacker.getAttr().add_addi_dodge(7); //7%的闪避率
+			attacker.getAttr()._attr_dodge.addAddiData(AttrDodgeContain.dodgeAddi.dodge_skill.ordinal(), 7);
 		}
 	}
 

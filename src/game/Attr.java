@@ -1,6 +1,7 @@
 package game;
 
-import game.define.SexType;
+import game.attri.AttrDodgeContain;
+import game.attri.AttrHitContain;
 
 /*
  * 属性类
@@ -47,70 +48,7 @@ public class Attr
 	
 	public AttrHitContain _attr_hit = new AttrHitContain(AttrHitContain.hitBase.hit_num.ordinal(), AttrHitContain.hitAddi.hit_num.ordinal()); //新版的命中属性
 	
-	int _base_hit = 0;	//固定性的， 1.永久型技能 2.星盘  3.命宫  4.
-	int _addi_hit = 0;	//1.技能的暂时加成 2.武器的临时效果 
-	int _final_hit = 0;		// 命中
-	
-	public int get_base_hit() {
-		return _base_hit;
-	}
-	public void set_base_hit(int _base_hit) {
-		this._base_hit = _base_hit;
-	}
-
-	public int get_addi_hit() {
-		return _addi_hit;
-	}
-	public void set_addi_hit(int _addi_hit) {
-		this._addi_hit = _addi_hit;
-	}
-	public void add_addi_hit(int v) {
-		this._addi_hit += v;
-	}
-
-	public int get_final_hit() {
-		return _final_hit;
-	}
-	public void set_final_hit(int _final_hit) {
-		this._final_hit = _final_hit;
-	}
-	
-	public void calc_final_hit(){
-		set_final_hit(get_base_hit() + get_addi_hit());
-	}
-	
-	
-	int _base_dodge = 0;
-	int _addi_dodge = 0;
-	int _final_dodge = 0;	// 闪避
-	
-	public int get_base_dodge() {
-		return _base_dodge;
-	}
-	public void set_base_dodge(int _base_dodge) {
-		this._base_dodge = _base_dodge;
-	}
-
-	public int get_addi_dodge() {
-		return _addi_dodge;
-	}
-	public void set_addi_dodge(int _addi_dodge) {
-		this._addi_dodge = _addi_dodge;
-	}
-	public void add_addi_dodge(int v) {
-		this._addi_dodge += v;
-	}
-
-	public int get_final_dodge() {
-		return _final_dodge;
-	}
-	public void set_final_dodge(int _final_dodge) {
-		this._final_dodge = _final_dodge;
-	}
-	
-	public void calc_final_dodge(){
-		set_final_dodge(get_base_dodge() + get_addi_dodge());
-	}
+	public AttrDodgeContain _attr_dodge = new AttrDodgeContain(AttrDodgeContain.dodgeBase.dodge_num.ordinal(), AttrDodgeContain.dodgeAddi.dodge_num.ordinal());
 	
 
 
@@ -170,8 +108,8 @@ public class Attr
 		_final_hp = _base_hp + this.get_addi_hp();
 		this._max_hp = _final_hp;
 		
-		calc_final_hit();
-		calc_final_dodge();
+		_attr_hit.recalAll(); 	//重算命中率
+		_attr_dodge.recalAll();	//重算闪避率
 	}
 	
 	public void calcFinalOnly(){
@@ -182,8 +120,8 @@ public class Attr
 		_final_minjie = get_total_base_minjie()  + get_total_addi_minjie();
 		_final_speed = get_total_base_speed() + get_total_addi_speed();
 		
-		calc_final_hit();
-		calc_final_dodge();
+		_attr_hit.recalAll();//重算命中率
+		_attr_dodge.recalAll();//重算闪避率
 	}
 	
 	public void clearExceptBaseThree(){

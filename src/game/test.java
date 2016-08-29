@@ -5,7 +5,6 @@ import game.define.WeaponKind;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
 import game.fight.FightFlow;
-import game.gametest.TestDamage;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
 

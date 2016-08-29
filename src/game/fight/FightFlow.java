@@ -112,8 +112,8 @@ public class FightFlow {
 			boolean bDoubleHit){
 		String strOut;
 		////// todo: 命中计算 [可以抽取]
-		int hit_rate = atk.getAttr().get_final_hit();
-		int dodge_rate = def.getAttr().get_final_dodge();
+		int hit_rate = atk.getAttr()._attr_hit.getTotalFinalData();
+		int dodge_rate = def.getAttr()._attr_dodge.getTotalFinalData();
 		boolean bHit = true; //是否命中, 【这里需要考虑“必中”效果带来的修正】
 		if (dodge_rate > hit_rate){
 			bHit = !CalcTool.probabilityInt(dodge_rate - hit_rate);

@@ -1,8 +1,6 @@
-package game;
+package game.attri;
 
 import java.util.ArrayList;
-
-import org.ietf.jgss.Oid;
 
 /**
  *  属性容器, 为了解决哪一类各种属性， 基本属性以及战斗属性
@@ -14,8 +12,12 @@ public class AttrContain{
 
 	public AttrContain(int baseSize, int addSize) {
 		// TODO Auto-generated constructor stub
-		mBaseData = new ArrayList<>();
-		mAddiFightData = new ArrayList<>();
+		mBaseData = new ArrayList<>(baseSize);
+		for(int i = 0; i < baseSize; ++i)
+			mBaseData.add(0);
+		mAddiFightData = new ArrayList<>(addSize);
+		for(int i = 0; i < addSize; ++i)
+			mAddiFightData.add(0);
 	}
 	
 	public void setBaseData(int index, int v){

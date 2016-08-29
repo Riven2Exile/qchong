@@ -1,4 +1,4 @@
-package game;
+package game.attri;
 
 /**
  *  命中属性容器
@@ -9,7 +9,7 @@ package game;
 public class AttrHitContain extends AttrContain{
 
 	//基础命中 
-	enum hitBase{
+	public enum hitBase{
 		hit_base, 
 		hit_num,	//放在最后一项
 	}
@@ -17,7 +17,7 @@ public class AttrHitContain extends AttrContain{
 	/**
 	 * 附加命中属性
 	 */
-	enum hitAddi{
+	public enum hitAddi{
 		hit_skill,
 		hit_buff,
 		bit_equip,
