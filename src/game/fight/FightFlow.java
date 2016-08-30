@@ -137,11 +137,13 @@ public class FightFlow {
 				}
 			}
 
-			///////////// 计算增伤 以及伤害减免 (可以抽取函数)
-			nSelfDamage = execAddAndSubDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
+			///////////// 计算增伤 以及伤害减免 
+			nSelfDamage = execAddDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
+			nSelfDamage = execSubDamage(atk.getAttr(), def.getAttr(), nSelfDamage, nFightWay, nWeaponType);
 
 			// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次 attackOnce方法
-			// todo: ---->霸气护体
+			// todo: 受击减伤技能---->霸气护体
+			// todo: 受击之后的反击 (包括普通反击, 大海无量,)
 
 			// 血量变化
 			def.getAttr().add_final_hp(-nSelfDamage);
@@ -247,7 +249,7 @@ public class FightFlow {
 	/**
 	 *  执行增伤和减伤
 	 */
-	public int execAddAndSubDamage(Attr atk, Attr def, int nSelfDamage, int nFightWay, int nWeaponType){
+	public int execAddDamage(Attr atk, Attr def, int nSelfDamage, int nFightWay, int nWeaponType){
 		// ---->>>>>>>  数值型增伤
 		int nAddDamageChangeNum = calcAddDamageNumber(atk, nFightWay, nWeaponType);
 		if (nAddDamageChangeNum > 0) {
@@ -259,6 +261,13 @@ public class FightFlow {
 			nSelfDamage = (int) Math.floor(nSelfDamage * ((100 + nAddDamageChangePer) / (double) 100));
 		}
 
+		return nSelfDamage;
+	}
+	
+	/**
+	 *  执行减伤
+	 */
+	public int execSubDamage(Attr atk, Attr def, int nSelfDamage, int nFightWay, int nWeaponType){
 		// ---->>>>>>> 数值型减伤
 		int nSubDamageChangeNum = calcSubDamageNumber(def, nFightWay, nWeaponType);
 		if (nSubDamageChangeNum > 0) {
@@ -269,7 +278,7 @@ public class FightFlow {
 		}
 		// ---->>>>>>> 百分比减伤
 		int nSubDamageChangePer = calcSubDamagePer(def, nFightWay, nWeaponType); // 减伤应该最多只能减
-																							// 100%吧
+																					// 100%吧
 		if (nSelfDamage > 0 && nSubDamageChangePer > 0) {
 			nSelfDamage = nSelfDamage - (int) Math.floor(nSelfDamage * ((100 - nSubDamageChangePer) / (double) 100)); //
 			if (nSelfDamage < 0) {
