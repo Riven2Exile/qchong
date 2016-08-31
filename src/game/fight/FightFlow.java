@@ -16,6 +16,7 @@ import game.define.WeaponType;
 import game.factory.SkillFactory;
 import game.factory.WeaponFactory;
 import game.gametest.TestDamage;
+import game.skill.BaseDefenseSkill;
 import game.skill.BaseSkill;
 import game.skill.SkillInterface;
 import game.weapon.BaseWeapon;
@@ -53,18 +54,23 @@ public class FightFlow {
 	 */
 	public int StartFight(Player p1, Player p2){
 		
-		FightCon attackerCon = new FightCon();
+		FightCon fCon1 = new FightCon();
+		fCon1._nFightWay = FightWayInterface.AW_Weapon;
+		p1.GetWeaponHelper().ForEach(fCon1); 	//武器权重流
+		fCon1._nFightWay = FightWayInterface.AW_ActiveMainSkill;
+		p1.GetSkillHelper().ForEach(fCon1);	//主动技能权重流
+		if( p1.GetSkillHelper().hasSkill(SkillInterface.BaQiHuTi_SKILL) ){ //霸气护体
+			fCon1._nBaQiNum = 2;
+		}
 		
-		attackerCon._nFightWay = FightWayInterface.AW_Weapon;
-		p1.GetWeaponHelper().ForEach(attackerCon); 	//武器权重流
-		attackerCon._nFightWay = FightWayInterface.AW_ActiveMainSkill;
-		p1.GetSkillHelper().ForEach(attackerCon);	//主动技能权重流
-		
-		FightCon moodCon = new FightCon();
-		moodCon._nFightWay = FightWayInterface.AW_Weapon;
-		p2.GetWeaponHelper().ForEach(attackerCon);
-		moodCon._nFightWay = FightWayInterface.AW_ActiveMainSkill;
-		p2.GetSkillHelper().ForEach(moodCon);
+		FightCon fCon2 = new FightCon(); //木桩
+		fCon2._nFightWay = FightWayInterface.AW_Weapon;
+		p2.GetWeaponHelper().ForEach(fCon2);
+		fCon2._nFightWay = FightWayInterface.AW_ActiveMainSkill;
+		p2.GetSkillHelper().ForEach(fCon2);
+		if( p2.GetSkillHelper().hasSkill(SkillInterface.BaQiHuTi_SKILL) ){
+			fCon2._nBaQiNum = 2;
+		}
 		
 		// todo: “攻击权重随机之前触发型”
 		
@@ -73,7 +79,7 @@ public class FightFlow {
 		int nHuihe = 20;
 		for (int i = 1; i <= nHuihe; ++i){
 			// 确定到某人的流程,
-			execARound(p1, p2, attackerCon, i);
+			execARound(p1, p2, fCon1, fCon2, i);
 			
 			if(p1.getAttr().get_final_hp() <= 0){
 				out.println(p1.GetPlayerName() + "死亡了!"); 
@@ -84,7 +90,7 @@ public class FightFlow {
 				break;
 			}
 			
-			execARound(p2, p1, moodCon, i);
+			execARound(p2, p1, fCon2, fCon1, i);
 			if(p1.getAttr().get_final_hp() <= 0){
 				out.println(p1.GetPlayerName() + "死亡了!"); 
 				break;
@@ -108,7 +114,7 @@ public class FightFlow {
 	/**
 	 * 攻击一次
 	 */
-	public void attackOnce(Player atk, Player def, FightCon attackerCon, int i, int nFightWay, int id, BaseWeapon weapon, BaseSkill skill, 
+	public void attackOnce(Player atk, Player def, FightCon attackerCon, FightCon defenderCon, int i, int nFightWay, int id, BaseWeapon weapon, BaseSkill skill, 
 			boolean bDoubleHit){
 		String strOut;
 		////// todo: 命中计算 [可以抽取]
@@ -119,6 +125,10 @@ public class FightFlow {
 			bHit = !CalcTool.probabilityInt(dodge_rate - hit_rate);
 		}
 		
+		
+		///// todo: 反击计算
+		boolean hit_back_rate = CalcTool.probabilityInt( atk.getAttr().get_hitBack() );
+		boolean zhuangsi = false; //是否装死
 		
 		
 		////// 伤害计算
@@ -143,7 +153,15 @@ public class FightFlow {
 
 			// todo: 触发防守方的被动技能, 如果是反伤技能， 还需要再走一次 attackOnce方法
 			// todo: 受击减伤技能---->霸气护体
-			// todo: 受击之后的反击 (包括普通反击, 大海无量,)
+			if (defenderCon._nBaQiNum > 0) {
+				BaseDefenseSkill dSkill = (BaseDefenseSkill)def.GetSkillHelper().getSkill(SkillInterface.BaQiHuTi_SKILL);
+				if(dSkill.canTrigger(nFightWay, id) ){
+					--defenderCon._nBaQiNum;
+					int old_d = nSelfDamage;
+					nSelfDamage = dSkill.defense(nSelfDamage);
+					out.print("["+def.GetPlayerName()+"]" + "霸气护体，原伤害" + old_d + ", 格挡之后" + nSelfDamage + ",");
+				}
+			}
 
 			// 血量变化
 			def.getAttr().add_final_hp(-nSelfDamage);
@@ -156,6 +174,7 @@ public class FightFlow {
 					sk.takeEffect(def, null);
 					sk.addUseCount(1);
 					bDoubleHit = false; // [取消本次连击]
+					zhuangsi = true;
 					out.println(def.GetPlayerName() + "触发了装死技能!");// print
 				}
 			}
@@ -176,11 +195,20 @@ public class FightFlow {
 		}
 		out.println(strOut);
 		
+		if (zhuangsi == false) {
+			if (hit_back_rate) {
+				// todo: 触发反击
+			}
+			else {
+				// todo: 触发受击技能
+			}
+		}
 		
 		
-		if (bDoubleHit) { ///// 执行攻击者连击
+		
+		if (bDoubleHit) { ///// 执行攻击者[连击]
 			out.println(atk.GetPlayerName() + "触发连击!");
-			attackOnce(atk, def, attackerCon, i, nFightWay, id, weapon, skill, false);
+			attackOnce(atk, def, attackerCon, defenderCon, i, nFightWay, id, weapon, skill, false);
 		}
 	}
 	
@@ -188,7 +216,7 @@ public class FightFlow {
 	/**
 	 *  单方面一个回合
 	 */
-	public void execARound(Player attacker, Player defender, FightCon attackerCon, int i){
+	public void execARound(Player attacker, Player defender, FightCon attackerCon, FightCon defenderCon, int i){
 		/*******/ ///这边需要一个属性的重新计算
 		attacker.getAttr().set_doubleHit(0); //连击率置零
 		
@@ -230,7 +258,7 @@ public class FightFlow {
 		
 		boolean bDoubleHit = CalcTool.probabilityInt(attacker.getAttr().get_doubleHit());// 是否连击
 		
-		attackOnce(attacker, defender, attackerCon, i, nFightWay, id, weapon, skill, bDoubleHit);	// 【攻击一次】
+		attackOnce(attacker, defender, attackerCon, defenderCon, i, nFightWay, id, weapon, skill, bDoubleHit);	// 【攻击一次】
 		
 		// 自身的消耗计算, 武器减1，技能使用次数+1
 		if (FightWayInterface.AW_Weapon == nFightWay) {
@@ -247,7 +275,7 @@ public class FightFlow {
 	}
 	
 	/**
-	 *  执行增伤和减伤
+	 *  执行增伤
 	 */
 	public int execAddDamage(Attr atk, Attr def, int nSelfDamage, int nFightWay, int nWeaponType){
 		// ---->>>>>>>  数值型增伤
@@ -295,7 +323,7 @@ public class FightFlow {
 	public int calcAddDamageNumber(Attr atk, int fightway, int weaponType){
 		int n = 0;
 		if (FightWayInterface.AW_EmptyHand == fightway){
-			n = atk.get_addEmptyHandDamage();
+			n = atk._addEmptyHandDamage.getTotalFinalData();
 		}
 		else if(FightWayInterface.AW_Weapon == fightway){
 			if(WeaponType.WEAPON_LARGE == weaponType){
@@ -321,7 +349,7 @@ public class FightFlow {
 	public int calcAddDamagePer(Attr atk, int fightway, int weaponType){
 		int n = 0;
 		if (FightWayInterface.AW_EmptyHand == fightway){
-			n = atk.get_addEmptyHandDamagePer();
+			n = atk._addEmptyHandDamagePer.getTotalFinalData();
 		}
 		else if(FightWayInterface.AW_Weapon == fightway){
 			if(WeaponType.WEAPON_LARGE == weaponType){
@@ -347,7 +375,7 @@ public class FightFlow {
 	public int calcSubDamageNumber(Attr def, int fightway, int weaponType){
 		int n = 0;
 		if (FightWayInterface.AW_EmptyHand == fightway){
-			n = def.get_subEmptyHandDamage();
+			n = def._subEmptyHandDamage.getTotalFinalData();
 		}
 		else if(FightWayInterface.AW_Weapon == fightway){
 			if(WeaponType.WEAPON_LARGE == weaponType){
@@ -373,7 +401,7 @@ public class FightFlow {
 	public int calcSubDamagePer(Attr def, int fightway, int weaponType){
 		int n = 0;
 		if (FightWayInterface.AW_EmptyHand == fightway){
-			n = def.get_subEmptyHandDamagePer();
+			n = def._subEmptyHandDamagePer.getTotalFinalData();
 		}
 		else if(FightWayInterface.AW_Weapon == fightway){
 			if(WeaponType.WEAPON_LARGE == weaponType){
@@ -409,6 +437,7 @@ public class FightFlow {
 		wood.getAttr().CalcFinalThree();
 		wood.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.ZhuangSi_Skill, 0));	//装死
 		wood.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.LingBoWeiBu_Skill, 0)); //凌波微步
+		wood.GetSkillHelper().addSkill(SkillFactory.getInstance(SkillInterface.BaQiHuTi_SKILL, 0)); // 霸气护体
 		
 		wood.GetSkillHelper().reCaclForeverAttr(wood);
 		wood.getAttr().CalcAddictionThree();
@@ -417,16 +446,16 @@ public class FightFlow {
 		
 		WeaponHelper wh =  p1.GetWeaponHelper();
 		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.SHE_YING_GONG, 0)); //加蛇影弓
-		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.KUANG_MO_LIAN, 0)); //加狂魔镰
-		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.DUAN_JIAN, 0));	//短剑
+//		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.KUANG_MO_LIAN, 0)); //加狂魔镰
+//		wh.addWeapon(WeaponFactory.getInstance(WeaponKind.DUAN_JIAN, 0));	//短剑
 		
 		SkillHelper sh = p1.GetSkillHelper();
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.SPEED_SKILL, 0));
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.FoShanWuYingJiao_Skill, 0)); 	//佛山无影腿
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.LongJuanFeng_Skill, 0));		//龙卷风
 		sh.addSkill(SkillFactory.getInstance(SkillInterface.HAND_GOOD_SKILL, 0));	//肉搏好手
-		sh.addSkill(SkillFactory.getInstance(SkillInterface.WEAPON_GOOD_SKILL, 0));	//武器好手
-		sh.addSkill(SkillFactory.getInstance(SkillInterface.QiENaoYang_Skill, 0));	//企鹅挠痒
+//		sh.addSkill(SkillFactory.getInstance(SkillInterface.WEAPON_GOOD_SKILL, 0));	//武器好手
+//		sh.addSkill(SkillFactory.getInstance(SkillInterface.QiENaoYang_Skill, 0));	//企鹅挠痒
 		//sh.addSkill(SkillFactory.getInstance(SkillInterface.HP_SKILL, 0));
 		
 		/// 下面的计算语句可以抽取成函数

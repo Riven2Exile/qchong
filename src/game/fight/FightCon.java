@@ -1,5 +1,6 @@
 package game.fight;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -17,6 +18,10 @@ import game.weapon.BaseWeapon;
 class FightCon implements ForeachInterface{
 	private HashMap<Integer, FightWight> _mapWeapon	= new HashMap<>();			//武器列表
 	private HashMap<Integer, FightWight> _mapActiveSkill = new HashMap<>();	//主动技能
+	
+	ArrayList<Integer> _array_hitBack = new ArrayList<>();	//反击技能列表
+	
+	public int _nBaQiNum = 0; //霸气护体次数
 	
 	public BaseWeapon _curWeaponInHand = null;	//当前手持的武器(不包含投掷武器，或者是投掷出去的手持武器)
 	
@@ -41,6 +46,14 @@ class FightCon implements ForeachInterface{
 		_mapActiveSkill.put(w.getID(), w);
 	}
 	
+	public void addHitBackSkill(int skill) {
+		_array_hitBack.add(skill);
+	}
+	
+	public int getHitBackSkill(int _nFightWay, int id){
+		
+		return 0;
+	}
 	
 	public int getRandomFightWay(){
 		//构造权重

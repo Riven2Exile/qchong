@@ -1,7 +1,11 @@
 package game;
 
+import game.attri.AttrAddHandDamageContain;
+import game.attri.AttrAddHandDamagePerContain;
 import game.attri.AttrDodgeContain;
 import game.attri.AttrHitContain;
+import game.attri.AttrSubHandDamageContain;
+import game.attri.AttrSubHandDamagePerContain;
 
 /*
  * 属性类
@@ -45,12 +49,16 @@ public class Attr
 	
 	////// 暴击   / 抗暴
 	////// 命中   / 闪避
-	
 	public AttrHitContain _attr_hit = new AttrHitContain(AttrHitContain.hitBase.hit_num.ordinal(), AttrHitContain.hitAddi.hit_num.ordinal()); //新版的命中属性
 	
 	public AttrDodgeContain _attr_dodge = new AttrDodgeContain(AttrDodgeContain.dodgeBase.dodge_num.ordinal(), AttrDodgeContain.dodgeAddi.dodge_num.ordinal());
 	
-
+	int _hitBack = 0;// 反击率
+	public void set_hitBack(int h){
+		_hitBack = h;
+	}
+	public void add_hitBack(int v) { _hitBack += v;}
+	public int get_hitBack() { return _hitBack; }
 
 	int _doubleHit = 0;	//连击率
 	
@@ -79,10 +87,10 @@ public class Attr
 	int _subLargeWeaponDamage	= 0;
 	int _subLargeWeaponDamagePer= 0;
 	
-	int _addEmptyHandDamage		= 0;
-	int _addEmptyHandDamagePer	= 0;
-	int _subEmptyHandDamage		= 0;
-	int _subEmptyHandDamagePer	= 0;
+	public AttrAddHandDamageContain _addEmptyHandDamage = new AttrAddHandDamageContain(); //空手数值增伤
+	public AttrAddHandDamagePerContain _addEmptyHandDamagePer = new AttrAddHandDamagePerContain(); //空手百分比增伤
+	public AttrSubHandDamageContain _subEmptyHandDamage		= new AttrSubHandDamageContain(); //空手数值减伤
+	public AttrSubHandDamagePerContain _subEmptyHandDamagePer	= new AttrSubHandDamagePerContain(); //空手百分比减伤
 	
 	
 	public void CalcBaseThree(){
@@ -110,6 +118,10 @@ public class Attr
 		
 		_attr_hit.recalAll(); 	//重算命中率
 		_attr_dodge.recalAll();	//重算闪避率
+		_addEmptyHandDamage.recalAll();
+		_addEmptyHandDamagePer.recalAll();
+		_subEmptyHandDamage.recalAll();
+		_subEmptyHandDamagePer.recalAll();
 	}
 	
 	public void calcFinalOnly(){
@@ -122,6 +134,10 @@ public class Attr
 		
 		_attr_hit.recalAll();//重算命中率
 		_attr_dodge.recalAll();//重算闪避率
+		_addEmptyHandDamage.recalAll();
+		_addEmptyHandDamagePer.recalAll();
+		_subEmptyHandDamage.recalAll();
+		_subEmptyHandDamagePer.recalAll();
 	}
 	
 	public void clearExceptBaseThree(){
@@ -557,49 +573,6 @@ public class Attr
 		this._subLargeWeaponDamagePer += n;
 	}
 
-	public int get_addEmptyHandDamage() {
-		return _addEmptyHandDamage;
-	}
-
-	public void set_addEmptyHandDamage(int _addEmptyHandDamage) {
-		this._addEmptyHandDamage = _addEmptyHandDamage;
-	}
-	public void add_addEmptyHandDamage(int n){
-		this._addEmptyHandDamage += n;
-	}
-
-	public int get_addEmptyHandDamagePer() {
-		return _addEmptyHandDamagePer;
-	}
-
-	public void set_addEmptyHandDamagePer(int _addEmptyHandDamagePer) {
-		this._addEmptyHandDamagePer = _addEmptyHandDamagePer;
-	}
-	public void add_addEmptyHandDamagePer(int n){
-		this._addEmptyHandDamagePer += n;
-	}
-
-	public int get_subEmptyHandDamage() {
-		return _subEmptyHandDamage;
-	}
-
-	public void set_subEmptyHandDamage(int _subEmptyHandDamage) {
-		this._subEmptyHandDamage = _subEmptyHandDamage;
-	}
-	public void add_subEmptyHandDamage(int n){
-		this._subEmptyHandDamage += n;
-	}
-
-	public int get_subEmptyHandDamagePer() {
-		return _subEmptyHandDamagePer;
-	}
-
-	public void set_subEmptyHandDamagePer(int _subEmptyHandDamagePer) {
-		this._subEmptyHandDamagePer = _subEmptyHandDamagePer;
-	}
-	public void add_subEmptyHandDamagePer(int n){
-		this._subEmptyHandDamagePer += n;
-	}
 
 	public int get_doubleHit() {
 		return _doubleHit;

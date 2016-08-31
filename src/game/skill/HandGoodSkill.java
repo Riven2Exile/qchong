@@ -2,6 +2,7 @@ package game.skill;
 
 import game.Attr;
 import game.Player;
+import game.attri.AttrAddHandDamagePerContain;
 
 /**
  *  肉搏好手
@@ -31,7 +32,8 @@ public class HandGoodSkill extends BaseSkill {
 		int lv = getSkillLv();
 		Attr attr = attacker.getAttr();
 		if (0 == lv){
-			attr.add_addEmptyHandDamagePer(20); //空手伤害增加了20%
+			//attr.add_addEmptyHandDamagePer(20); //空手伤害增加了20%
+			attr._addEmptyHandDamagePer.addBaseData(AttrAddHandDamagePerContain.base.skill.ordinal(), 20);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package game.factory;
 
 import game.skill.AttackDoubleSkill;
+import game.skill.BaQiHuTiSkill;
 import game.skill.BalanceSkill;
 import game.skill.BaseSkill;
 import game.skill.CanYingSkill;
@@ -31,7 +32,7 @@ public class SkillFactory {
 		case BaseSkill.REHIT_SKILL: return new RehitSkill(lv);		//反击技能
 		case BaseSkill.LOSS_LOVE_SKILL: return new LossLoveSkill(lv);	//晴天霹雳
 		case BaseSkill.ATTACK_DOUBLE_SKILL: return new AttackDoubleSkill(lv);	//仙风云体
-		case BaseSkill.BaQiHuTi_SKILL: return null; //【todo:】霸气护体
+		case BaseSkill.BaQiHuTi_SKILL: return new BaQiHuTiSkill(lv); //【todo:】霸气护体
 		case BaseSkill.DaHaiWuLiang_SKILL: return null; //【todo:】大海无量
 		case BaseSkill.PiCaoRouHou_Skill: return null; //【todo:】皮糙肉厚
 		case BaseSkill.LingBoWeiBu_Skill: return new LingBoWeiBuSkill(lv);	//凌波微步
